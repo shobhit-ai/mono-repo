@@ -23,6 +23,7 @@ export const Blog: CollectionConfig = {
             {
               name: 'content',
               type: 'richText',
+              required: false,
             },
           ],
         },
