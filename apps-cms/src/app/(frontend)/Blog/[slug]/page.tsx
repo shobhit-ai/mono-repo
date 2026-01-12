@@ -57,7 +57,6 @@ export async function generateMetadata({
   }
 }
 
-
 export default async function BlogDetails({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const blog = await getBlogBySlug(slug)
@@ -129,7 +128,6 @@ export default async function BlogDetails({ params }: { params: Promise<{ slug: 
             }}
           >
             <strong>Tag</strong>
-
             {blog.tags.map((tag: any) => (
               <span
                 key={tag.id}

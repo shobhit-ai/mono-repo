@@ -41,7 +41,6 @@ export default async function BlogListPage() {
   return (
     <div style={{ padding: "60px 20px", background: "#f8f8f8ff" }}>
       <h1 style={{ textAlign: "center", color: 'black' }}>Blogs</h1>
-
       <div
         style={{
           display: "grid",
@@ -72,7 +71,6 @@ export default async function BlogListPage() {
                 }}
               />
             )}
-
             <div style={{ padding: "22px" }}>
               <h2 style={{ marginBottom: "10px", color: "black" }}>
                 {blog.title}
