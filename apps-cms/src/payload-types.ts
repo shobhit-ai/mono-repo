@@ -174,7 +174,7 @@ export interface Media {
 export interface Blog {
   id: number;
   title: string;
-  content?: {
+  content: {
     root: {
       type: string;
       children: {
@@ -188,7 +188,7 @@ export interface Blog {
       version: number;
     };
     [k: string]: unknown;
-  } | null;
+  };
   featuredImage: number | Media;
   description?: string | null;
   tags?: (number | Tag)[] | null;
