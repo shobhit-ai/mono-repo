@@ -1,6 +1,7 @@
 import { getPayloadClient } from '@/lib/payload'
 import type { Metadata } from 'next'
 import { unstable_cache } from 'next/cache'
+import { MediaGallery } from './MediaGallery'
 
 export const revalidate = 3600
 
@@ -22,7 +23,7 @@ const getMedia = unstable_cache(
       depth: 0,
     })
   },
-  ['media'],             
+  ['media'],
   { revalidate: 3600 }
 )
 
@@ -31,67 +32,17 @@ export default async function MediaPage() {
   const media = mediaData.docs || []
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        backgroundColor: "#f9f9f9",
-        padding: "60px 20px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <h1 style={{ fontSize: "48px", fontWeight: 700 }}>
-        Media
-      </h1>
-
-      {media.length === 0 && <p>No media found.</p>}
-
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: "30px",
-          width: "100%",
-          maxWidth: "1100px",
-        }}
-      >
-        {media.map((m: any) => (
-          <div
-            key={m.id}
-            style={{
-              background: "#fff",
-              borderRadius: "16px",
-              overflow: "hidden",
-              boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
-            }}
-          >
-            <img
-              src={m.url}
-              alt={m.alt || m.title}
-              style={{
-                width: "100%",
-                height: "160px",
-                objectFit: "cover",
-              }}
-            />
-            <div style={{ padding: "16px" }}>
-              <h2
-                style={{
-                  fontSize: "20px",
-                  fontWeight: 600,
-                  color: "#111",
-                  marginBottom: "8px",
-                }}
-              >
-                {m.title}
-              </h2>
-              <p style={{ fontSize: "14px", color: "#666" }}>
-                {m.filename}
-              </p>
-            </div>
-          </div>
-        ))}
+    <div className="min-h-screen bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <header className="mb-6 flex flex-col items-center text-center gap-0">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
+            Media
+          </h1>
+          <p className="max-w-2xl text-lg text-gray-600">
+            Browse our media gallery including images and assets.
+          </p>
+        </header>
+        <MediaGallery media={media} />
       </div>
     </div>
   )

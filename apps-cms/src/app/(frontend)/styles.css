@@ -1,7 +1,4 @@
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :root {
   --font-mono: 'Roboto Mono', monospace;
@@ -14,8 +11,7 @@
 html {
   font-size: 18px;
   line-height: 32px;
-
-  background: rgb(0, 0, 0);
+  background: rgb(255, 255, 255);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -25,14 +21,12 @@ body,
   height: 100%;
 }
 
-
 body {
   font-family: system-ui;
   font-size: 18px;
   line-height: 32px;
-
   margin: 0;
-  color: rgb(1000, 1000, 1000);
+  color: rgb(20, 20, 20);
 
   @media (max-width: 1024px) {
     font-size: 15px;
@@ -51,6 +45,7 @@ h1 {
   font-size: 64px;
   line-height: 70px;
   font-weight: bold;
+  color: rgb(0, 0, 0);
 
   @media (max-width: 1024px) {
     margin: 24px 0;
@@ -71,14 +66,16 @@ h1 {
 
 p {
   margin: 24px 0;
+  color: rgb(60, 60, 60);
 
   @media (max-width: 1024px) {
-    margin: calc(var(--base) * 0.75) 0;
+    margin: 18px 0;
   }
 }
 
 a {
-  color: currentColor;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
 
   &:focus {
     opacity: 0.8;
@@ -105,6 +102,7 @@ svg {
   max-width: 1024px;
   margin: 0 auto;
   overflow: hidden;
+  background: rgb(255, 255, 255);
 
   @media (max-width: 400px) {
     padding: 24px;
@@ -128,21 +126,21 @@ svg {
     gap: 12px;
 
     a {
-      text-decoration: none;
-      padding: 0.25rem 0.5rem;
+      padding: 0.25rem 0.75rem;
       border-radius: 4px;
+      font-size: 14px;
     }
 
     .admin {
-      color: rgb(0, 0, 0);
-      background: rgb(1000, 1000, 1000);
+      color: rgb(255, 255, 255);
+      background: rgb(0, 0, 0);
       border: 1px solid rgb(0, 0, 0);
     }
 
     .docs {
-      color: rgb(1000, 1000, 1000);
-      background: rgb(0, 0, 0);
-      border: 1px solid rgb(1000, 1000, 1000);
+      color: rgb(0, 0, 0);
+      background: rgb(255, 255, 255);
+      border: 1px solid rgb(0, 0, 0);
     }
   }
 
@@ -158,13 +156,15 @@ svg {
 
     p {
       margin: 0;
+      font-size: 14px;
+      color: rgb(80, 80, 80);
     }
 
     .codeLink {
-      text-decoration: none;
       padding: 0 0.5rem;
-      background: rgb(60, 60, 60);
+      background: rgb(230, 230, 230);
       border-radius: 4px;
+      color: rgb(0, 0, 0);
     }
   }
 }

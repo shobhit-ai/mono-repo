@@ -127,8 +127,6 @@ export interface UserAuthOperations {
 export interface User {
   id: number;
   user: string;
-  title: string;
-  alt: string;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -174,6 +172,7 @@ export interface Media {
 export interface Blog {
   id: number;
   title: string;
+  featuredImage: number | Media;
   content: {
     root: {
       type: string;
@@ -189,7 +188,6 @@ export interface Blog {
     };
     [k: string]: unknown;
   };
-  featuredImage: number | Media;
   description?: string | null;
   tags?: (number | Tag)[] | null;
   updatedAt: string;
@@ -297,8 +295,6 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   user?: T;
-  title?: T;
-  alt?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -341,8 +337,8 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface BlogSelect<T extends boolean = true> {
   title?: T;
-  content?: T;
   featuredImage?: T;
+  content?: T;
   description?: T;
   tags?: T;
   updatedAt?: T;

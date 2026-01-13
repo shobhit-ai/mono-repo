@@ -12,15 +12,5 @@ export const Users: CollectionConfig = {
       type: 'text',
       required: true,
     },
-    {
-      name: 'title',
-      type: 'email',
-      required: true,
-    },
-    {
-      name: 'alt',
-      type: 'text',
-      required: true,
-    },
   ],
 }

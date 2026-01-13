@@ -14,6 +14,13 @@ export const Blog: CollectionConfig = {
       required: true,
     },
     {
+      name: 'featuredImage',
+      label: 'Featured Image',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+    },
+    {
       type: 'tabs',
       tabs: [
         {
@@ -30,13 +37,7 @@ export const Blog: CollectionConfig = {
         {
           label: 'Setting',
           fields: [
-            {
-              name: 'featuredImage',
-              label: 'Featured Image',
-              type: 'upload',
-              relationTo: 'media',
-              required: true,
-            },
+
             {
               name: 'description',
               type: 'text',
