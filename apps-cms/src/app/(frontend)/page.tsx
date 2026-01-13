@@ -4,19 +4,10 @@ import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-type Card = {
-  id: number;
-  title: string;
-};
 gsap.registerPlugin(ScrollTrigger);
 
 
-export default async function HomePage() {
-
-  const cardsRef = useRef<HTMLDivElement[]>([]);
-  cardsRef.current = [];
-  cardsRef.current = [];
-
+export default function HomePage() {
 
   const cards = [
     {
@@ -105,72 +96,77 @@ export default async function HomePage() {
     },
   ]
 
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
   useLayoutEffect(() => {
-    cardsRef.current = cardsRef.current.slice(0, cards.length);
-    const elements = cardsRef.current;
+    const elements = cardsRef.current.filter((el): el is HTMLDivElement => el !== null);
 
-    ScrollTrigger.refresh(); // Refresh all ScrollTriggers
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-
-    gsap.set(elements, {
-      transformPerspective: 800,
-      transformStyle: "preserve-3d",
-      backfaceVisibility: "hidden",
-    });
-
-    elements.forEach((card) => {
-      
-      card.onmouseenter = () => gsap.to(card, {
-        scale: 1.04, y: -8, duration: 0.2, ease: "power2.out"
-      });
-      card.onmouseleave = () => gsap.to(card, {
-        scale: 1, y: 0, duration: 0.2, ease: "power2.out"
-      });
-    });
-
-    gsap.killTweensOf(elements);
+    ScrollTrigger.getAll().forEach(t => t.kill());
 
     const tl = gsap.timeline({
-      defaults: { duration: 0.12, ease: "power2.out" }
+      scrollTrigger: {
+        trigger: elements[0],
+        start: "top 90%",
+        toggleActions: "play none none none",
+      },
+      defaults: { duration: 0.5, ease: "power1.out" }
     });
 
     tl.from(elements, {
-      y: 30, opacity: 0, stagger: 0.04
+      y: 50,
+      opacity: 0,
+      stagger: 0.1,
+    })
+
+      .to(elements, {
+        scale: 1.05,
+        rotation: 2,
+        stagger: 0.1,
+        yoyo: true,
+        repeat: 1
+      });
+
+    elements.forEach((card) => {
+      const hoverIn = () => {
+        gsap.to(card, {
+          scale: 1.1,
+          y: -15,
+          zIndex: 10,
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+          duration: 0.4,
+          ease: "power2.out",
+        });
+      };
+
+      const hoverOut = () => {
+        gsap.to(card, {
+          scale: 1,
+          y: 0,
+          zIndex: 1,
+          boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+          duration: 0.4,
+          ease: "power2.out",
+        });
+      };
+
+      card.addEventListener("mouseenter", hoverIn);
+      card.addEventListener("mouseleave", hoverOut);
+
+      gsap.to(card, {
+        y: "-=8",
+        duration: 2 + Math.random(),
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: 2,
+      });
     });
-
-    tl.to(elements, {
-      scale: 0.95, rotation: 1,
-      stagger: 0.03, yoyo: true, repeat: 1
-    });
-
-    tl.to(elements, {
-      y: 0, opacity: 1, scale: 1,
-      stagger: 0.02
-    }, "-=0.05");
-
-    tl.fromTo(elements,
-      { rotationY: 35 },
-      { rotationY: 0, stagger: 0.02, duration: 0.2 },
-      "-=0.03"
-    );
-
-    setTimeout(() => {
-      if (cards.length === elements.length) {
-        tl.to(elements, {
-          y: "-=3", duration: 1, repeat: -1,
-          yoyo: true, ease: "sine.inOut", stagger: 0.05
-        }, "+=0.05");
-      }
-    }, 200);
 
     return () => {
+      ScrollTrigger.getAll().forEach(t => t.kill());
       gsap.killTweensOf(elements);
-      elements.forEach(card => {
-        card.onmouseenter = null;
-        card.onmouseleave = null;
-      });
     };
-  }, [cards.length]);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
@@ -188,7 +184,12 @@ export default async function HomePage() {
           {cards.map((card) => (
             <div
               key={card.id}
-              ref={(el) => el && cardsRef.current.push(el)}
+              ref={(el) => {
+                if (el && !cardsRef.current.includes(el)) {
+                  cardsRef.current.push(el);
+                }
+              }}
+
               className="bg-white rounded-3xl overflow-hidden border border-gray-100 flex flex-col h-full cursor-pointer"
               style={{ boxShadow: "0 4px 8px rgba(0,0,0,0.1)" }}
             >

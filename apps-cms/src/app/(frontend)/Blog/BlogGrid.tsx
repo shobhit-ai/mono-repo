@@ -1,74 +1,45 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
 import Link from 'next/link'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 export const BlogGrid = ({ blogs }: { blogs: any[] }) => {
-    const cardsRef = useRef<HTMLDivElement[]>([])
+    const cardsRef = useRef<(HTMLDivElement | null)[]>([])
 
-    useEffect(() => {
-        cardsRef.current = cardsRef.current.slice(0, blogs.length)
-        const elements = cardsRef.current;
-        gsap.set(elements, {
-            transformPerspective: 1000,
-            transformStyle: "preserve-3d",
-            backfaceVisibility: "hidden",
-            opacity: 1,
+    useLayoutEffect(() => {
+        const elements = cardsRef.current.filter((el): el is HTMLDivElement => el !== null)
+
+        ScrollTrigger.getAll().forEach(t => t.kill())
+
+        if (elements.length === 0) return
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: elements[0],
+                start: "top 90%",
+                toggleActions: "play none none none",
+            },
+            defaults: { duration: 0.5, ease: "power1.out" }
         });
-        const cards = cardsRef.current
 
-        if (cards.length === 0) return
-        gsap.set(cards, { opacity: 1 })
-
-        gsap.from(cards, {
+        tl.from(elements, {
             y: 50,
             opacity: 0,
-            scale: 0.95,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: 'power3.out',
+            stagger: 0.1,
         })
+            .to(elements, {
+                scale: 1.05,
+                rotation: 2,
+                stagger: 0.1,
+                yoyo: true,
+                repeat: 1
+            });
 
-        const cleanups: (() => void)[] = []
-
-        cards.forEach((card) => {
-            if (!card) return
-
-            const hoverIn = () => {
-                gsap.to(card, {
-                    scale: 1.05,
-                    y: -5,
-                    boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
-                    duration: 0.3,
-                    ease: 'power2.out',
-                })
-            }
-
-            const hoverOut = () => {
-                gsap.to(card, {
-                    scale: 1,
-                    y: 0,
-                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-                    duration: 0.3,
-                    ease: 'power2.out',
-                })
-            }
-
-            card.addEventListener('mouseenter', hoverIn)
-            card.addEventListener('mouseleave', hoverOut)
-
-            cleanups.push(() => {
-                card.removeEventListener('mouseenter', hoverIn)
-                card.removeEventListener('mouseleave', hoverOut)
-            })
-        })
-
-        const tl = gsap.timeline({ defaults: { duration: 0.5, ease: "power1.out" } });
-        tl.from(cardsRef.current, { y: 50, opacity: 0, stagger: 0.1 })
-            .to(cardsRef.current, { scale: 1.05, rotation: 2, stagger: 0.1, yoyo: true, repeat: 1 });
-
-        gsap.from(".card-title", {
+        tl.from(".card-title", {
             y: 20,
             opacity: 0,
             stagger: 0.2,
@@ -76,30 +47,47 @@ export const BlogGrid = ({ blogs }: { blogs: any[] }) => {
             ease: "power2.out",
         });
 
-        cardsRef.current.forEach((card) => {
+        elements.forEach((card) => {
+            const hoverIn = () => {
+                gsap.to(card, {
+                    scale: 1.1,
+                    y: -15,
+                    zIndex: 10,
+                    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+                    duration: 0.4,
+                    ease: "power2.out",
+                });
+            };
+
+            const hoverOut = () => {
+                gsap.to(card, {
+                    scale: 1,
+                    y: 0,
+                    zIndex: 1,
+                    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                    duration: 0.4,
+                    ease: "power2.out",
+                });
+            };
+
+            card.addEventListener("mouseenter", hoverIn);
+            card.addEventListener("mouseleave", hoverOut);
+
             gsap.to(card, {
-                y: "-=10",
-                duration: 1.5,
+                y: "-=8",
+                duration: 2 + Math.random(),
                 repeat: -1,
                 yoyo: true,
                 ease: "sine.inOut",
+                delay: 2,
             });
         });
 
-        gsap.to(cards, {
-            y: '-=10',
-            duration: 2,
-            repeat: -1,
-            yoyo: true,
-            ease: 'sine.inOut',
-            stagger: 0.2,
-        })
-
         return () => {
-            cleanups.forEach((cleanup) => cleanup())
-            gsap.killTweensOf(cards)
-        }
-    }, [blogs])
+            ScrollTrigger.getAll().forEach(t => t.kill());
+            gsap.killTweensOf(elements);
+        };
+    }, [blogs.length]);
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -121,7 +109,7 @@ export const BlogGrid = ({ blogs }: { blogs: any[] }) => {
                         </div>
                     )}
                     <div className="p-6 flex flex-col flex-grow">
-                        <h2 className="text-xl font-bold text-gray-900 mb-2">
+                        <h2 className="card-title text-xl font-bold text-gray-900 mb-2">
                             {blog.title}
                         </h2>
                         <p className="text-gray-600 text-sm mb-4 flex-grow">
