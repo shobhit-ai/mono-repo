@@ -65,7 +65,6 @@ export default async function BlogDetails({ params }: { params: Promise<{ slug: 
   return (
     <main className="bg-[#f6f7f9] flex justify-center px-4 py-[72px] font-sans">
       <article className="w-full max-w-[760px] bg-white rounded-[12px] overflow-hidden shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
-
         {blog.featuredImage?.url && (
           <img
             src={`http://localhost:3000${blog.featuredImage.url}`}
@@ -77,11 +76,9 @@ export default async function BlogDetails({ params }: { params: Promise<{ slug: 
           <h1 className="text-[26px] font-semibold leading-[1.25] text-[#0a0a0a]">
             {blog.title}
           </h1>
-
           <p className="text-[16px] leading-[1.55] text-[#222] font-serif">
             {blog.description}
           </p>
-
           <div className="flex items-center gap-[6px] text-[12.5px] text-[#555]">
             <span className="font-semibold text-[#222] font-serif">
               Tag:

@@ -1,5 +1,4 @@
 import { CollectionConfig } from 'payload'
-
 export const Blog: CollectionConfig = {
   slug: 'blog',
   admin: {
