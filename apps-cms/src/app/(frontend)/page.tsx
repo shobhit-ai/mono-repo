@@ -25,7 +25,6 @@ const HomePage = () => {
   const col3Ref = useRef(null);
   const [hoveredAwardIndex, setHoveredAwardIndex] = useState<number | null>(null);
 
-  // Hero background images
   const heroImages = [
     "https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/6913015d65650b87232a69a3_01---H0_HERO_5of9.jpg",
     "https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/6915957f07025e43a5ef65eb_01---H0_HERO_7of9.jpg",
@@ -184,11 +183,12 @@ const HomePage = () => {
     //   touchMultiplier: 2,
     //   infinite: false,
     // });
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       wheelMultiplier: 1,
-      touchMultiplier: 0,   
+      touchMultiplier: 0,
       infinite: false,
     });
 
@@ -240,7 +240,6 @@ const HomePage = () => {
       }
     );
 
-    // Image Reveal Animations with Clip Path
     const imageWrappers = document.querySelectorAll('.journal-image-wrapper, .story_image_wrapper');
     imageWrappers.forEach((wrapper) => {
       const img = wrapper.querySelector('img');
@@ -261,7 +260,6 @@ const HomePage = () => {
       }
     });
 
-    // Featured Projects Parallax
     const featuredProjectItems = document.querySelectorAll('.featured-project-item img');
     featuredProjectItems.forEach((img) => {
       gsap.to(img, {
@@ -276,7 +274,6 @@ const HomePage = () => {
       });
     });
 
-    // Awards Row Stagger Animation
     const awardRows = document.querySelectorAll('.award-row');
     gsap.fromTo(awardRows,
       { x: -30, opacity: 0 },
@@ -293,7 +290,6 @@ const HomePage = () => {
       }
     );
 
-    // Studio Grid Images Scale Animation
     const studioImages = document.querySelectorAll('.studio-hero-box img');
     studioImages.forEach((img, index) => {
       gsap.fromTo(img,
@@ -310,7 +306,6 @@ const HomePage = () => {
       );
     });
 
-    // Title Animations - Fade and Slide
     const titles = document.querySelectorAll('.section-title-large, .featured-projects-title, .awards-title');
     titles.forEach((title) => {
       gsap.fromTo(title,
@@ -328,7 +323,6 @@ const HomePage = () => {
       );
     });
 
-    // Magnetic Hover Effect for Buttons
     const magneticElements = document.querySelectorAll('.load-more-btn, .view-all-projects, .contact-btn, .subscribe-link');
     magneticElements.forEach((el) => {
       const element = el as HTMLElement;
@@ -356,17 +350,14 @@ const HomePage = () => {
       });
     });
 
-    // We Section Prefix Animation - EXACT DHK REPLICA
     const weSection = document.querySelector('.we_section');
     const weScroll = document.querySelector('.we_scroll') as HTMLElement;
     const weItems = document.querySelectorAll('.we_item');
 
     if (weSection && weScroll && weItems.length > 0) {
-      // Set initial states
       gsap.set(weItems, { opacity: 0.1 });
       gsap.set(weScroll, { y: 0 });
 
-      // Move the 'we' prefix tracker line by line
       weItems.forEach((item, idx) => {
         const itemEl = item as HTMLElement;
         const firstItemEl = weItems[0] as HTMLElement;
@@ -392,6 +383,10 @@ const HomePage = () => {
       document.documentElement.classList.remove('dark-mode');
     };
   }, []);
+
+
+
+
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
@@ -422,7 +417,6 @@ const HomePage = () => {
 
   return (
     <div className={`dhk-website`}>
-      {/* Full Screen Menu Overlay */}
       <div className="full-screen-menu" ref={menuRef}>
         <div className="menu-container">
           <nav className="menu-nav">
@@ -446,10 +440,6 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-
-
-
-      {/* Hero Section - Vertical Parallax Columns */}
       <section className="hero-section">
         <div className="hero-slider-container">
           <div className="hero-column" ref={col1Ref}>
@@ -662,16 +652,16 @@ const HomePage = () => {
         </div>
       </section>
 
-      <footer className="bg-black text-white px-8 pt-48 pb-10 mt-20" style={{ marginTop: "300px", paddingBottom: "20px" }}>
-        <div className="grid grid-cols-12 gap-1.5 items-end">
-          <div className="col-span-3 flex flex-row gap-4 text-base font-medium leading-snug items-center">
+      <footer className="bg-black text-white px-5 md:px-8 pt-20 md:pt-48 pb-10 mt-20 md:mt-20" style={{ marginTop: "100px", paddingBottom: "20px" }}>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-1.5 items-start md:items-end">
+          <div className="order-last md:order-first col-span-1 md:col-span-3 flex flex-col md:flex-row gap-4 text-sm md:text-base font-medium leading-snug items-start md:items-center opacity-50 md:opacity-100">
             <div className="lowercase">all rights reserved. dhk@2025</div>
             <a href="#" className="lowercase transition-opacity duration-300 hover:opacity-60">
               POPI + PAIA
             </a>
           </div>
 
-          <div className="col-span-6 col-start-7 flex justify-end gap-16">
+          <div className="col-span-1 md:col-span-6 md:col-start-7 flex flex-col md:flex-row justify-start md:justify-end gap-10 md:gap-16 w-full">
             <div className="flex flex-col gap-4">
 
               <a href="#" className="flex items-center text-base font-bold leading-snug lowercase transition-opacity duration-300 hover:opacity-60">
@@ -681,15 +671,11 @@ const HomePage = () => {
                 home
               </a>
 
-              <a href="#" className="text-base font-bold leading-snug lowercase hover:opacity-60">projects</a>
-              <a href="#" className="text-base font-bold leading-snug lowercase hover:opacity-60">studio</a>
-              <a href="#" className="text-base font-bold leading-snug lowercase hover:opacity-60">journal</a>
-              <a href="#" className="text-base font-bold leading-snug lowercase hover:opacity-60">careers ↗</a>
-
+              <a href="#projects" className="text-base font-bold leading-snug lowercase hover:opacity-60">projects</a>
+              <a href="#studio" className="text-base font-bold leading-snug lowercase hover:opacity-60">studio</a>
+              <a href="#journal" className="text-base font-bold leading-snug lowercase hover:opacity-60">journal</a>
+              <a href="#careers" className="text-base font-bold leading-snug lowercase hover:opacity-60">careers ↗</a>
             </div>
-
-
-            {/* SOCIAL LINKS */}
             <div className="flex flex-col gap-1">
               <a href="#" className="text-base font-bold leading-snug lowercase hover:opacity-60">instagram</a>
               <a href="#" className="text-base font-bold leading-snug lowercase hover:opacity-60">linkedin</a>
@@ -697,9 +683,7 @@ const HomePage = () => {
               <a href="#" className="text-base font-bold leading-snug lowercase hover:opacity-60">pinterest</a>
               <a href="#" className="text-base font-bold leading-snug lowercase hover:opacity-60">vimeo</a>
             </div>
-
-            {/* NEWSLETTER */}
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 w-full md:w-auto">
               <h4 className="text-base font-bold leading-snug lowercase mb-0">newsletter</h4>
               <input
                 type="text"
@@ -716,15 +700,12 @@ const HomePage = () => {
               </button>
 
             </div>
-            <div className="col-span-3 flex justify-end">
+            <div className="flex justify-start md:justify-end mt-4 md:mt-0">
               <button className="text-base font-bold lowercase transition-opacity duration-300 hover:opacity-60">
                 [ contact us ]
               </button>
             </div>
           </div>
-
-
-
         </div>
       </footer>
     </div>
@@ -732,3 +713,6 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+
+

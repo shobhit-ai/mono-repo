@@ -73,9 +73,6 @@ export const BlogGrid = ({ blogs }: { blogs: any[] }) => {
         });
 
         return () => {
-            // Kill the specific ScrollTrigger batch instance
-            // Note: ScrollTrigger.batch returns an array of ScrollTriggers
-            // type casting to unknown as any to handle various GSAP TS defs
             if (Array.isArray(batch)) {
                 batch.forEach(t => t.kill());
             }
@@ -128,3 +125,4 @@ export const BlogGrid = ({ blogs }: { blogs: any[] }) => {
         </div>
     )
 }
+

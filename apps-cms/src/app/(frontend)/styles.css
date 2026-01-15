@@ -270,13 +270,11 @@ ul {
 
 .hero-title-large {
   font-size: 1rem;
-  /* Smaller text as seen in screenshot footer of hero */
   font-weight: 700;
   margin: 0;
   pointer-events: auto;
 }
 
-/* WE MISSION SECTION - DHK EXACT REPLICA */
 .we_section {
   background-color: #000;
   color: #fff;
@@ -395,7 +393,6 @@ ul {
   transform: scale(1.03);
 }
 
-/* Our Story Section */
 .story_section {
   padding: 0 0 150px 0;
   background: #000;
@@ -445,7 +442,6 @@ ul {
   margin-bottom: 30px;
 }
 
-/* Common Section Title */
 .section-title-large {
   font-size: 56px;
   font-weight: 800;
@@ -1171,5 +1167,233 @@ ul {
 
   .award-category {
     display: none;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  :root {
+    --container-padding: 30px;
+    --nav-height: 70px;
+  }
+
+  .main-header {
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 var(--container-padding);
+  }
+
+  .header-center {
+    display: none;
+  }
+
+  .header-left {
+    grid-column: auto;
+  }
+
+  .header-right {
+    grid-column: auto;
+    gap: 15px;
+  }
+
+  .hero-slider-container {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-column:nth-child(2),
+  .hero-column:nth-child(3) {
+    display: none;
+  }
+
+  .we_text,
+  .we_right .we_item {
+    font-size: 40px;
+    line-height: 1.1;
+  }
+
+  .featured-projects-title {
+    font-size: 40px;
+  }
+
+  .section-title-large {
+    font-size: 40px;
+  }
+
+  .award-row {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .main-header {
+    grid-template-columns: 1fr auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-center {
+    display: none;
+  }
+
+  .header-right {
+    justify-content: flex-end;
+  }
+
+  .theme-toggle {
+    display: none;
+  }
+
+  .hero-section {
+    height: 80vh;
+  }
+
+  .hero-column {
+    border-right: none;
+  }
+
+  .we_layout-top {
+    display: flex;
+    flex-direction: column;
+    top: 15vh;
+  }
+
+  .we_scroll {
+    margin-bottom: 20px;
+  }
+
+  .we_right {
+    width: 100%;
+    grid-column: auto;
+  }
+
+  .we_text,
+  .we_right .we_item {
+    font-size: 32px;
+    line-height: 1.1;
+    white-space: normal;
+  }
+
+  .we_layout-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .we_left {
+    margin-bottom: 10px;
+  }
+
+  .story_grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .story_label {
+    margin-top: 40px;
+    padding-left: 0;
+  }
+
+  .story_content {
+    margin-top: 10px;
+    margin-bottom: 40px;
+    font-size: 15px;
+  }
+
+  .projects-title-grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .featured-project-item img {
+    height: 50vh;
+  }
+
+  .project-overlay-title {
+    font-size: 1.5rem;
+    top: 20px;
+    right: 20px;
+  }
+
+  .projects-footer-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .footer-project-box {
+    height: 50vh;
+    width: 100%;
+  }
+
+  .studio-hero-grid {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .studio-hero-box {
+    height: 50vh;
+  }
+
+  .box-black {
+    display: none;
+  }
+
+  .awards-section {
+    display: flex;
+    flex-direction: column;
+    padding: 80px 20px 40px;
+  }
+
+  .awards-title {
+    position: relative;
+    top: 0;
+    margin-bottom: 20px;
+  }
+
+  .awards-reveal-container {
+    display: none;
+  }
+
+  .award-row {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .award-year {
+    font-size: 0.75rem;
+    opacity: 0.6;
+  }
+
+  .award-project-info {
+    font-size: 1rem;
+  }
+
+  .award-category {
+    display: block;
+    text-align: left;
+    opacity: 0.5;
+    font-size: 0.75rem;
+  }
+
+  .journal-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .menu-nav-link {
+    font-size: 14vw;
+  }
+  .menu-footer {
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
 }
