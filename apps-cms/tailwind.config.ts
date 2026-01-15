@@ -5,6 +5,8 @@ export default {
     './app/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/(frontend)/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/Blog/**/*.{js,ts,jsx,tsx,mdx}',
     './src/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
     './src/collections/**/*.{js,ts,jsx,tsx}',

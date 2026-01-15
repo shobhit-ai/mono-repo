@@ -32,13 +32,13 @@ export default async function MediaPage() {
   const media = mediaData.docs || []
 
   return (
-    <div className="min-h-screen bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 py-16 px-4 sm:px-6 lg:px-8 pt-6">
       <div className="max-w-7xl mx-auto">
         <header className="mb-6 flex flex-col items-center text-center gap-0">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight pt-6">
             Media
           </h1>
-          <p className="max-w-2xl text-lg text-gray-600">
+          <p className="max-w-2xl text-lg text-gray-600 pt-6 pb-16">
             Browse our media gallery including images and assets.
           </p>
         </header>

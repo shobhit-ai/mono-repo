@@ -13,39 +13,35 @@ export const BlogGrid = ({ blogs }: { blogs: any[] }) => {
     useLayoutEffect(() => {
         const elements = cardsRef.current.filter((el): el is HTMLDivElement => el !== null)
 
-        ScrollTrigger.getAll().forEach(t => t.kill())
-
         if (elements.length === 0) return
 
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: elements[0],
-                start: "top 90%",
-                toggleActions: "play none none none",
-            },
-            defaults: { duration: 0.5, ease: "power1.out" }
+        // Set initial state to avoid flash of unstyled content
+        gsap.set(elements, { opacity: 0, y: 50 });
+
+        const batch = ScrollTrigger.batch(elements, {
+            onEnter: batch => gsap.to(batch, {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: "power3.out",
+                overwrite: true
+            }),
+            start: "top 90%",
+            once: true
         });
 
-        tl.from(elements, {
-            y: 50,
-            opacity: 0,
-            stagger: 0.1,
-        })
-            .to(elements, {
-                scale: 1.05,
-                rotation: 2,
+        const titleAnim = gsap.fromTo(".card-title",
+            { y: 20, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
                 stagger: 0.1,
-                yoyo: true,
-                repeat: 1
-            });
-
-        tl.from(".card-title", {
-            y: 20,
-            opacity: 0,
-            stagger: 0.2,
-            duration: 0.8,
-            ease: "power2.out",
-        });
+                duration: 0.6,
+                ease: "power2.out",
+                delay: 0.2
+            }
+        );
 
         elements.forEach((card) => {
             const hoverIn = () => {
@@ -73,24 +69,24 @@ export const BlogGrid = ({ blogs }: { blogs: any[] }) => {
             card.addEventListener("mouseenter", hoverIn);
             card.addEventListener("mouseleave", hoverOut);
 
-            gsap.to(card, {
-                y: "-=8",
-                duration: 2 + Math.random(),
-                repeat: -1,
-                yoyo: true,
-                ease: "sine.inOut",
-                delay: 2,
-            });
+
         });
 
         return () => {
-            ScrollTrigger.getAll().forEach(t => t.kill());
+            // Kill the specific ScrollTrigger batch instance
+            // Note: ScrollTrigger.batch returns an array of ScrollTriggers
+            // type casting to unknown as any to handle various GSAP TS defs
+            if (Array.isArray(batch)) {
+                batch.forEach(t => t.kill());
+            }
+
+            if (titleAnim) titleAnim.kill();
             gsap.killTweensOf(elements);
         };
     }, [blogs.length]);
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {blogs.map((blog: any, index: number) => (
                 <div
                     key={blog.id}
@@ -100,7 +96,7 @@ export const BlogGrid = ({ blogs }: { blogs: any[] }) => {
                     className="bg-white rounded-3xl border border-gray-100 flex flex-col h-full overflow-hidden"
                 >
                     {blog.featuredImage?.url && (
-                        <div className="overflow-hidden h-64 w-full">
+                        <div className="overflow-hidden h-96 w-full">
                             <img
                                 src={`http://localhost:3000${blog.featuredImage.url}`}
                                 alt={blog.title}

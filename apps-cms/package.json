@@ -25,6 +25,7 @@
     "@payloadcms/richtext-lexical": "^3.70.0",
     "@payloadcms/richtext-slate": "^3.70.0",
     "@payloadcms/ui": "^3.70.0",
+    "@studio-freight/lenis": "^1.0.42",
     "dotenv": "16.4.7",
     "graphql": "^16.8.1",
     "gsap": "^3.14.2",

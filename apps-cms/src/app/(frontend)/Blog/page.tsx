@@ -41,13 +41,13 @@ export default async function BlogListPage() {
 
   return (
 
-    <div className="min-h-screen bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 py-16 px-4 sm:px-6 lg:px-8 pt-6">
       <div className="max-w-7xl mx-auto">
         <header className="mb-6 flex flex-col items-center text-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 pt-6">
             Blogs
           </h1>
-          <p className="max-w-2xl text-lg text-gray-600">
+          <p className="max-w-2xl text-lg text-gray-600 pt-8 pb-16">
             Read the latest blogs, tutorials, and updates from our team.
           </p>
         </header>
