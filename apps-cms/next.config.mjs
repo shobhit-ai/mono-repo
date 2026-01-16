@@ -19,7 +19,7 @@ const nextConfig = {
         has: [
           {
             type: 'host',
-            value: 'admin.localhost:3000',
+            value: 'admin.localhost:3000', 
           },
         ],
         destination: '/admin',

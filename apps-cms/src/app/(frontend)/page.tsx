@@ -199,39 +199,75 @@ const HomePage = () => {
 
     gsap.ticker.lagSmoothing(0);
 
+    // const updateWeSection = () => {
+    //   const weSection = document.querySelector('.we_section');
+    //   const weScroll = document.querySelector('.we_scroll') as HTMLElement;
+    //   const weItems = document.querySelectorAll('.we_item');
+
+    //   if (weSection && weScroll && weItems.length > 0) {
+    //     weItems.forEach((item, idx) => {
+    //       const itemEl = item as HTMLElement;
+    //       const firstItemEl = weItems[0] as HTMLElement;
+    //       const distance = itemEl.offsetTop - firstItemEl.offsetTop;
+
+    //       // Find and kill existing triggers for this item to avoid duplicates
+    //       ScrollTrigger.getAll().forEach(t => {
+    //         if (t.vars.trigger === itemEl && (t.vars as any).id === `we-trigger-${idx}`) {
+    //           t.kill();
+    //         }
+    //       });
+
+    //       ScrollTrigger.create({
+    //         id: `we-trigger-${idx}`,
+    //         trigger: itemEl,
+    // start: "top 45%",
+    // end: "bottom 45%",
+    //         scrub: 1.5,
+    //         onEnter: () => {
+    //           gsap.to(weScroll, { y: distance, duration: 0.4, ease: "power2.inOut" });
+    //         },
+    //         onEnterBack: () => {
+    //           gsap.to(weScroll, { y: distance, duration: 0.4, ease: "power2.inOut" });
+    //         }
+    //       });
+    //     });
+    //   }
+    // };
+
     const updateWeSection = () => {
       const weSection = document.querySelector('.we_section');
       const weScroll = document.querySelector('.we_scroll') as HTMLElement;
       const weItems = document.querySelectorAll('.we_item');
 
       if (weSection && weScroll && weItems.length > 0) {
-        weItems.forEach((item, idx) => {
-          const itemEl = item as HTMLElement;
-          const firstItemEl = weItems[0] as HTMLElement;
-          const distance = itemEl.offsetTop - firstItemEl.offsetTop;
-
-          // Find and kill existing triggers for this item to avoid duplicates
-          ScrollTrigger.getAll().forEach(t => {
-            if (t.vars.trigger === itemEl && (t.vars as any).id === `we-trigger-${idx}`) {
-              t.kill();
-            }
-          });
-
-          ScrollTrigger.create({
-            id: `we-trigger-${idx}`,
-            trigger: itemEl,
-            start: "top 45%",
-            end: "bottom 45%",
-            onEnter: () => {
-              gsap.to(weScroll, { y: distance, duration: 0.4, ease: "power2.inOut" });
-            },
-            onEnterBack: () => {
-              gsap.to(weScroll, { y: distance, duration: 0.4, ease: "power2.inOut" });
-            }
-          });
+        ScrollTrigger.getAll().forEach(t => {
+          if ((t.vars as any).id?.startsWith('we-trigger-')) {
+            t.kill();
+          }
         });
+
+        const totalDistance =
+          (weItems[weItems.length - 1] as HTMLElement).offsetTop -
+          (weItems[0] as HTMLElement).offsetTop;
+
+        gsap.to(weScroll, {
+          y: totalDistance,
+          ease: "none",
+          scrollTrigger: {
+            id: "we-trigger-main",
+            trigger: ".we_section",
+            start: "top 75%",
+            end: () => "+=" + (document.querySelector('.we_section') as HTMLElement).offsetHeight,
+            scrub: 1.5,
+            invalidateOnRefresh: true
+          }
+        });
+
       }
     };
+
+
+
 
     const handleResize = () => {
       lenis.resize();
