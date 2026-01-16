@@ -483,7 +483,7 @@ ul {
 
 .featured-project-item img {
   width: 100%;
-  height: 80vh;
+  height: 100vh;
   object-fit: cover;
   display: block;
   transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -690,8 +690,15 @@ ul {
 /* Journal Section */
 .journal-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 5px;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .journal-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+  }
 }
 
 .journal-card {
@@ -715,7 +722,7 @@ ul {
 }
 
 .journal-card:hover .journal-image-wrapper img {
-  transform: scale(1.05);
+  transform: translateY(-10%) scale(1.05);
 }
 
 .journal-meta {
@@ -758,19 +765,27 @@ ul {
 .journal-card-description {
   font-size: 0.85rem;
   line-height: 1.6;
-  margin-top: 0;
-  color: var(--secondary-text);
-  max-width: 100%;
+  color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   opacity: 0;
-  max-height: 0;
-  overflow: hidden;
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(20px);
+  pointer-events: none;
 }
 
 .journal-card:hover .journal-card-description {
   opacity: 1;
-  max-height: 300px;
-  margin-top: 15px;
+  transform: translateY(0);
 }
 
 .journal-view-article {
@@ -1392,6 +1407,7 @@ ul {
   .menu-nav-link {
     font-size: 14vw;
   }
+
   .menu-footer {
     grid-template-columns: 1fr;
     gap: 40px;

@@ -1,10 +1,10 @@
 'use client'
-
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from '@studio-freight/lenis';
 import "./styles.css";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -106,7 +106,7 @@ const HomePage = () => {
 
   const featuredProjects = [
     {
-      name: "radisson blu hotel",
+      name: "radisson red ",
       image: "https://cdn.prod.website-files.com/67483fb596664fd411a9d07f/67b208fda748d932f1e7b465_radisson.avif"
     }
   ];
@@ -188,10 +188,8 @@ const HomePage = () => {
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       wheelMultiplier: 1,
-      touchMultiplier: 0,
       infinite: false,
     });
-
 
     lenis.on('scroll', ScrollTrigger.update);
 
@@ -201,8 +199,50 @@ const HomePage = () => {
 
     gsap.ticker.lagSmoothing(0);
 
+    const updateWeSection = () => {
+      const weSection = document.querySelector('.we_section');
+      const weScroll = document.querySelector('.we_scroll') as HTMLElement;
+      const weItems = document.querySelectorAll('.we_item');
+
+      if (weSection && weScroll && weItems.length > 0) {
+        weItems.forEach((item, idx) => {
+          const itemEl = item as HTMLElement;
+          const firstItemEl = weItems[0] as HTMLElement;
+          const distance = itemEl.offsetTop - firstItemEl.offsetTop;
+
+          // Find and kill existing triggers for this item to avoid duplicates
+          ScrollTrigger.getAll().forEach(t => {
+            if (t.vars.trigger === itemEl && (t.vars as any).id === `we-trigger-${idx}`) {
+              t.kill();
+            }
+          });
+
+          ScrollTrigger.create({
+            id: `we-trigger-${idx}`,
+            trigger: itemEl,
+            start: "top 45%",
+            end: "bottom 45%",
+            onEnter: () => {
+              gsap.to(weScroll, { y: distance, duration: 0.4, ease: "power2.inOut" });
+            },
+            onEnterBack: () => {
+              gsap.to(weScroll, { y: distance, duration: 0.4, ease: "power2.inOut" });
+            }
+          });
+        });
+      }
+    };
+
+    const handleResize = () => {
+      lenis.resize();
+      updateWeSection();
+    };
+
+    window.addEventListener('resize', handleResize);
+
     setTimeout(() => {
       lenis.scrollTo(0, { immediate: true });
+      handleResize();
     }, 100);
 
     const revealElements = document.querySelectorAll('.reveal-on-scroll');
@@ -224,23 +264,48 @@ const HomePage = () => {
     });
 
     const journalCards = document.querySelectorAll('.journal-card');
-    gsap.fromTo(journalCards,
-      { y: 80, opacity: 0, scale: 0.95 },
-      {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        duration: 1,
-        stagger: 0.15,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: '.journal-grid',
-          start: "top 80%",
-        }
-      }
-    );
+    journalCards.forEach((card) => {
+      const imageWrapper = card.querySelector('.journal-image-wrapper');
+      const img = card.querySelector('img');
+      const content = card.querySelector('.journal-content'); // We will add this class to the text wrapper
 
-    const imageWrappers = document.querySelectorAll('.journal-image-wrapper, .story_image_wrapper');
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: card,
+          start: "top 85%",
+        }
+      });
+
+      if (imageWrapper && img) {
+        tl.fromTo(imageWrapper,
+          { clipPath: 'inset(100% 0% 0% 0%)' },
+          {
+            clipPath: 'inset(0% 0% 0% 0%)',
+            duration: 1.2,
+            ease: "power3.inOut"
+          }
+        )
+          .fromTo(img,
+            { scale: 1.3 },
+            { scale: 1, duration: 1.2, ease: "power3.out" },
+            "<"
+          );
+      }
+
+      if (content) {
+        tl.fromTo(content,
+          { y: 20, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out"
+          },
+        );
+      }
+    });
+
+    const imageWrappers = document.querySelectorAll('.story_image_wrapper'); // Removed .journal-image-wrapper to prevent double animation
     imageWrappers.forEach((wrapper) => {
       const img = wrapper.querySelector('img');
       if (img) {
@@ -324,22 +389,22 @@ const HomePage = () => {
     });
 
     const magneticElements = document.querySelectorAll('.load-more-btn, .view-all-projects, .contact-btn, .subscribe-link');
-    magneticElements.forEach((el) => {
+
+    const magneticHandlers = Array.from(magneticElements).map((el) => {
       const element = el as HTMLElement;
 
-      element.addEventListener('mouseenter', () => {
+      const onMouseEnter = () => {
         gsap.to(element, { scale: 1.05, duration: 0.3, ease: "power2.out" });
-      });
+      };
 
-      element.addEventListener('mouseleave', () => {
+      const onMouseLeave = () => {
         gsap.to(element, { scale: 1, x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
-      });
+      };
 
-      element.addEventListener('mousemove', (e: Event) => {
-        const mouseEvent = e as MouseEvent;
+      const onMouseMove = (e: MouseEvent) => {
         const rect = element.getBoundingClientRect();
-        const x = mouseEvent.clientX - rect.left - rect.width / 2;
-        const y = mouseEvent.clientY - rect.top - rect.height / 2;
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
 
         gsap.to(element, {
           x: x * 0.2,
@@ -347,7 +412,13 @@ const HomePage = () => {
           duration: 0.3,
           ease: "power2.out"
         });
-      });
+      };
+
+      element.addEventListener('mouseenter', onMouseEnter);
+      element.addEventListener('mouseleave', onMouseLeave);
+      element.addEventListener('mousemove', onMouseMove);
+
+      return { element, onMouseEnter, onMouseLeave, onMouseMove };
     });
 
     const weSection = document.querySelector('.we_section');
@@ -357,27 +428,16 @@ const HomePage = () => {
     if (weSection && weScroll && weItems.length > 0) {
       gsap.set(weItems, { opacity: 0.1 });
       gsap.set(weScroll, { y: 0 });
-
-      weItems.forEach((item, idx) => {
-        const itemEl = item as HTMLElement;
-        const firstItemEl = weItems[0] as HTMLElement;
-        const distance = itemEl.offsetTop - firstItemEl.offsetTop;
-
-        ScrollTrigger.create({
-          trigger: itemEl,
-          start: "top 45%",
-          end: "bottom 45%",
-          onEnter: () => {
-            gsap.to(weScroll, { y: distance, duration: 0.4, ease: "power2.inOut" });
-          },
-          onEnterBack: () => {
-            gsap.to(weScroll, { y: distance, duration: 0.4, ease: "power2.inOut" });
-          }
-        });
-      });
+      updateWeSection();
     }
 
     return () => {
+      window.removeEventListener('resize', handleResize);
+      magneticHandlers.forEach(({ element, onMouseEnter, onMouseLeave, onMouseMove }) => {
+        element.removeEventListener('mouseenter', onMouseEnter);
+        element.removeEventListener('mouseleave', onMouseLeave);
+        element.removeEventListener('mousemove', onMouseMove);
+      });
       lenis.destroy();
       ScrollTrigger.getAll().forEach(t => t.kill());
       document.documentElement.classList.remove('dark-mode');
@@ -515,15 +575,14 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-
           <div className="we_story-image reveal-on-scroll">
             <img
               src="https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/691301c8f33b310cff4aba02_01---H1_OurStory.jpg"
               alt="dhk story break"
             />
           </div>
-        </div>
-      </section>
+        </div >
+      </section >
 
       <section className="story_section">
         <div className="story_grid">
@@ -634,14 +693,16 @@ const HomePage = () => {
         <div className="section-title-large reveal-on-scroll">journal</div>
         <div className="journal-grid">
           {journalItems.map((item, idx) => (
-            <div key={idx} className="journal-card reveal-on-scroll">
+            <div key={idx} className="journal-card">
               <div className="journal-image-wrapper">
                 <img src={item.image} alt={item.title} />
                 <div className="journal-view-article">[ view article ]</div>
               </div>
-              <div className="journal-meta">
-                <span className="journal-tag">{item.type}</span>
-                <h3 className="journal-card-title">{item.title}</h3>
+              <div className="journal-content">
+                <div className="journal-meta">
+                  <span className="journal-tag">{item.type}</span>
+                  <h3 className="journal-card-title">{item.title}</h3>
+                </div>
               </div>
               <div className="journal-card-description">{item.description}</div>
             </div>
@@ -651,8 +712,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-
-      <footer className="bg-black text-white px-5 md:px-8 pt-20 md:pt-48 pb-10 mt-20 md:mt-20" style={{ marginTop: "100px", paddingBottom: "20px" }}>
+      <footer className="bg-black text-white px-8 md:px-8 pt-20 md:pt-48 pb-10 mt-20 md:mt-20" style={{ marginTop: "100px", paddingBottom: "20px" }}>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-1.5 items-start md:items-end">
           <div className="order-last md:order-first col-span-1 md:col-span-3 flex flex-col md:flex-row gap-4 text-sm md:text-base font-medium leading-snug items-start md:items-center opacity-50 md:opacity-100">
             <div className="lowercase">all rights reserved. dhk@2025</div>
@@ -661,8 +721,8 @@ const HomePage = () => {
             </a>
           </div>
 
-          <div className="col-span-1 md:col-span-6 md:col-start-7 flex flex-col md:flex-row justify-start md:justify-end gap-10 md:gap-16 w-full">
-            <div className="flex flex-col gap-4">
+          <div className="col-span-1 md:col-span-9 flex flex-wrap md:flex-row justify-between md:justify-end gap-y-10 gap-x-4 md:gap-16 w-full">
+            <div className="w-full md:w-auto flex flex-col gap-4">
 
               <a href="#" className="flex items-center text-base font-bold leading-snug lowercase transition-opacity duration-300 hover:opacity-60">
                 <span className="w-3 flex justify-start">
@@ -676,14 +736,14 @@ const HomePage = () => {
               <a href="#journal" className="text-base font-bold leading-snug lowercase hover:opacity-60">journal</a>
               <a href="#careers" className="text-base font-bold leading-snug lowercase hover:opacity-60">careers ↗</a>
             </div>
-            <div className="flex flex-col gap-1">
+            <div className="w-full md:w-auto flex flex-col gap-1">
               <a href="#" className="text-base font-bold leading-snug lowercase hover:opacity-60">instagram</a>
               <a href="#" className="text-base font-bold leading-snug lowercase hover:opacity-60">linkedin</a>
               <a href="#" className="text-base font-bold leading-snug lowercase hover:opacity-60">facebook</a>
               <a href="#" className="text-base font-bold leading-snug lowercase hover:opacity-60">pinterest</a>
               <a href="#" className="text-base font-bold leading-snug lowercase hover:opacity-60">vimeo</a>
             </div>
-            <div className="flex flex-col gap-3 w-full md:w-auto">
+            <div className="w-full md:w-auto flex flex-col gap-3">
               <h4 className="text-base font-bold leading-snug lowercase mb-0">newsletter</h4>
               <input
                 type="text"
@@ -695,20 +755,20 @@ const HomePage = () => {
                 placeholder="email address"
                 className="w-full bg-transparent border-b border-white/15 pb-2.5 text-white text-base font-bold lowercase outline-none focus:border-white/40 placeholder:text-white/40"
               />
-              <button className="text-left text-base font-bold lowercase hover:opacity-60 mt-2">
+              <button className="subscribe-link text-left text-base font-bold lowercase hover:opacity-60 mt-2">
                 [ subscribe ]
               </button>
 
             </div>
-            <div className="flex justify-start md:justify-end mt-4 md:mt-0">
-              <button className="text-base font-bold lowercase transition-opacity duration-300 hover:opacity-60">
+            <div className="w-full md:w-auto flex justify-start md:justify-end mt-4 md:mt-0">
+              <button className="contact-btn text-base font-bold lowercase transition-opacity duration-300 hover:opacity-60">
                 [ contact us ]
               </button>
             </div>
           </div>
         </div>
-      </footer>
-    </div>
+      </footer >
+    </div >
   );
 };
 

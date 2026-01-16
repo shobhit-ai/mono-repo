@@ -15,7 +15,6 @@ export const BlogGrid = ({ blogs }: { blogs: any[] }) => {
 
         if (elements.length === 0) return
 
-        // Set initial state to avoid flash of unstyled content
         gsap.set(elements, { opacity: 0, y: 50 });
 
         const batch = ScrollTrigger.batch(elements, {
@@ -125,4 +124,5 @@ export const BlogGrid = ({ blogs }: { blogs: any[] }) => {
         </div>
     )
 }
+
 
