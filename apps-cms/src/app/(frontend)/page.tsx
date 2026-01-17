@@ -142,7 +142,7 @@ const HomePage = () => {
 
     const heroTl = gsap.timeline({
       scrollTrigger: {
-        trigger: ".hero-section",
+        trigger: ".home-intro-wrapper",
         start: "top top",
         end: "+=150%",
         pin: true,
@@ -253,19 +253,19 @@ const HomePage = () => {
           }
         });
 
-        const totalDistance =
-          (weItems[weItems.length - 1] as HTMLElement).offsetTop -
-          (weItems[0] as HTMLElement).offsetTop;
+        const weLayoutTop = document.querySelector('.we_layout-top') as HTMLElement;
+        const weRight = document.querySelector('.we_right') as HTMLElement;
+        const totalDistance = weRight.offsetHeight - weScroll.offsetHeight;
 
         gsap.to(weScroll, {
           y: totalDistance,
           ease: "none",
           scrollTrigger: {
             id: "we-trigger-main",
-            trigger: ".we_section",
-            start: "top 75%",
-            end: () => "+=" + (document.querySelector('.we_section') as HTMLElement).offsetHeight,
-            scrub: 1.5,
+            trigger: ".we_layout-top",
+            start: "top 85%",
+            end: "bottom 20%",
+            scrub: 2.5,
             invalidateOnRefresh: true
           }
         });
@@ -496,7 +496,11 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-        <section className="hero-section relative w-full h-[80dvh] overflow-hidden bg-black text-white">
+      <div className="home-intro-wrapper w-full relative">
+        <section
+          className="hero-section relative w-full overflow-hidden bg-black text-white"
+          style={{ height: 'calc(100vh - 80px)' }}
+        >
           {!isIntroDone && (
             <div className="absolute top-0 left-0 w-full h-1 bg-gray-800 z-50">
               <div
@@ -527,9 +531,8 @@ const HomePage = () => {
             ))}
           </div>
         </section>
-
         <header
-          className="main-header relative w-full z-40"
+          className="main-header w-full z-40"
           style={{ mixBlendMode: isMenuOpen ? 'difference' : 'normal' }}
         >
           <div className="header-left">
@@ -556,8 +559,7 @@ const HomePage = () => {
             </button>
           </div>
         </header>
-
-
+      </div>
 
       <section className="we_section">
         <div className="we_contain">
@@ -700,7 +702,7 @@ const HomePage = () => {
         <div className="section-title-large reveal-on-scroll">journal</div>
         <div className="journal-grid">
           {journalItems.map((item, idx) => (
-            <div className="journal-card">
+            <div className="journal-card" key={idx}>
               <div className="journal-image-wrapper">
                 <img src={item.image} alt={item.title} />
                 <div className="journal-view-article">[ view article ]</div>
