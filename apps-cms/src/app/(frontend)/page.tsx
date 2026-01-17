@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from '@studio-freight/lenis';
@@ -24,11 +24,27 @@ const HomePage = () => {
   const col2Ref = useRef(null);
   const col3Ref = useRef(null);
   const [hoveredAwardIndex, setHoveredAwardIndex] = useState<number | null>(null);
+  const [isIntroDone, setIsIntroDone] = useState(false);
 
-  const heroImages = [
-    "https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/6913015d65650b87232a69a3_01---H0_HERO_5of9.jpg",
-    "https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/6915957f07025e43a5ef65eb_01---H0_HERO_7of9.jpg",
-    "https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/6915959befbd44da7d5e1890_01---H0_HERO_8of9.jpg"
+  useEffect(() => {
+    // 8 second wait as requested
+    const timer = setTimeout(() => setIsIntroDone(true), 8000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const heroColumns = [
+    [
+      "https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/67a35bcec1e6dee368c62d25_dhk_Logo.webp",
+      'https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/6913007efd068dff00aabfe4_01---H0_HERO_3of9.jpg',
+    ],
+    [
+      'https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/6913011d3d3a260559af0846_01---H0_HERO_4of9.jpg',
+      'https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/691300f826c9e59084f1de99_01---H0_HERO_1of9.jpg'
+    ],
+    [
+      'https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/6913013db3ed936bd259f69e_01---H0_HERO_2of9.jpg',
+      'https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/6913015d65650b87232a69a3_01---H0_HERO_5of9.jpg'
+    ]
   ];
 
   const awards = [
@@ -124,19 +140,43 @@ const HomePage = () => {
       { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.5 }
     );
 
-    const tl = gsap.timeline({
+    const heroTl = gsap.timeline({
       scrollTrigger: {
         trigger: ".hero-section",
         start: "top top",
-        end: "bottom top",
-        scrub: 1,
+        end: "+=150%",
+        pin: true,
+        scrub: 0.1,
+        snap: {
+          snapTo: [0, 1],
+          duration: { min: 0.1, max: 0.5 },
+          delay: 0.05,
+          ease: "power2.inOut",
+          inertia: false
+        },
+        anticipatePin: 1
       }
     });
 
-    if (col1Ref.current && col2Ref.current && col3Ref.current) {
-      tl.to(col1Ref.current, { y: -150 }, 0)
-        .to(col2Ref.current, { y: -300 }, 0)
-        .to(col3Ref.current, { y: -220 }, 0);
+    heroColumns.forEach((_, colIndex) => {
+      const visibleImage = document.querySelector(`.col-${colIndex} .hero-stack-image:first-child`);
+
+      if (visibleImage) {
+        heroTl.to(visibleImage, {
+          yPercent: -100,
+          ease: "none",
+          duration: 1,
+        }, colIndex * 0.2);
+      }
+    });
+
+    if (!isIntroDone) {
+      heroColumns.forEach((_, colIndex) => {
+        gsap.fromTo(`.col-${colIndex} .hero-stack-image:first-child img`,
+          { scale: 1.1 },
+          { scale: 1, duration: 9, ease: "power1.out" }
+        );
+      });
     }
 
     const items = [
@@ -199,41 +239,6 @@ const HomePage = () => {
 
     gsap.ticker.lagSmoothing(0);
 
-    // const updateWeSection = () => {
-    //   const weSection = document.querySelector('.we_section');
-    //   const weScroll = document.querySelector('.we_scroll') as HTMLElement;
-    //   const weItems = document.querySelectorAll('.we_item');
-
-    //   if (weSection && weScroll && weItems.length > 0) {
-    //     weItems.forEach((item, idx) => {
-    //       const itemEl = item as HTMLElement;
-    //       const firstItemEl = weItems[0] as HTMLElement;
-    //       const distance = itemEl.offsetTop - firstItemEl.offsetTop;
-
-    //       // Find and kill existing triggers for this item to avoid duplicates
-    //       ScrollTrigger.getAll().forEach(t => {
-    //         if (t.vars.trigger === itemEl && (t.vars as any).id === `we-trigger-${idx}`) {
-    //           t.kill();
-    //         }
-    //       });
-
-    //       ScrollTrigger.create({
-    //         id: `we-trigger-${idx}`,
-    //         trigger: itemEl,
-    // start: "top 45%",
-    // end: "bottom 45%",
-    //         scrub: 1.5,
-    //         onEnter: () => {
-    //           gsap.to(weScroll, { y: distance, duration: 0.4, ease: "power2.inOut" });
-    //         },
-    //         onEnterBack: () => {
-    //           gsap.to(weScroll, { y: distance, duration: 0.4, ease: "power2.inOut" });
-    //         }
-    //       });
-    //     });
-    //   }
-    // };
-
     const updateWeSection = () => {
       const weSection = document.querySelector('.we_section');
       const weScroll = document.querySelector('.we_scroll') as HTMLElement;
@@ -265,9 +270,6 @@ const HomePage = () => {
 
       }
     };
-
-
-
 
     const handleResize = () => {
       lenis.resize();
@@ -303,7 +305,7 @@ const HomePage = () => {
     journalCards.forEach((card) => {
       const imageWrapper = card.querySelector('.journal-image-wrapper');
       const img = card.querySelector('img');
-      const content = card.querySelector('.journal-content'); // We will add this class to the text wrapper
+      const content = card.querySelector('.journal-content');
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -480,10 +482,6 @@ const HomePage = () => {
     };
   }, []);
 
-
-
-
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -536,22 +534,36 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <section className="hero-section">
-        <div className="hero-slider-container">
-          <div className="hero-column" ref={col1Ref}>
-            <div className="hero-slide"><img src={heroImages[0]} alt="p1" /></div>
-            <div className="hero-slide"><img src={heroImages[1]} alt="p2" /></div>
+      <section className="hero-section relative w-full h-screen overflow-hidden bg-black text-white">
+        {!isIntroDone && (
+          <div className="absolute top-0 left-0 w-full h-1 bg-gray-800 z-50">
+            <div className="h-full bg-white transition-all duration-[8000ms] ease-linear w-full" style={{ width: isIntroDone ? '100%' : '0%' }}></div>
           </div>
-          <div className="hero-column" ref={col2Ref}>
-            <div className="hero-slide"><img src={heroImages[1]} alt="p2" /></div>
-            <div className="hero-slide"><img src={heroImages[2]} alt="p3" /></div>
-          </div>
-          <div className="hero-column" ref={col3Ref}>
-            <div className="hero-slide"><img src={heroImages[2]} alt="p3" /></div>
-            <div className="hero-slide"><img src={heroImages[0]} alt="p1" /></div>
-          </div>
+        )}
+
+        <div className="absolute inset-0 z-0 grid grid-cols-3 w-full h-full gap-0">
+          {heroColumns.map((colImages, colIndex) => (
+            <div key={colIndex} className={`col-${colIndex} relative w-full h-full overflow-hidden`}>
+              {colImages.map((src, imgIndex) => (
+                <div
+                  key={imgIndex}
+                  className="hero-stack-image absolute inset-0 w-full h-full"
+                  style={{
+                    zIndex: colImages.length - imgIndex
+                  }}
+                >
+                  <img
+                    src={src}
+                    className=""
+                    alt=""
+                  />
+                </div>
+              ))}
+            </div>
+          ))}
         </div>
-        <div className="hero-content">
+
+        <div className="hero-content z-[100]">
           <div className="header-left" style={{ color: '#fff' }}>
             <span className="hero-title-large">welcome to dhk</span>
           </div>
@@ -738,9 +750,9 @@ const HomePage = () => {
                 <div className="journal-meta">
                   <span className="journal-tag">{item.type}</span>
                   <h3 className="journal-card-title">{item.title}</h3>
+                  <div className="journal-card-description">{item.description}</div>
                 </div>
               </div>
-              <div className="journal-card-description">{item.description}</div>
             </div>
           ))}
           <div className="journal-card" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -794,7 +806,6 @@ const HomePage = () => {
               <button className="subscribe-link text-left text-base font-bold lowercase hover:opacity-60 mt-2">
                 [ subscribe ]
               </button>
-
             </div>
             <div className="w-full md:w-auto flex justify-start md:justify-end mt-4 md:mt-0">
               <button className="contact-btn text-base font-bold lowercase transition-opacity duration-300 hover:opacity-60">
@@ -803,12 +814,11 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-      </footer >
+      </footer>
     </div >
   );
 };
 
 export default HomePage;
-
 
 
