@@ -27,15 +27,15 @@ const HomePage = () => {
   const [isIntroDone, setIsIntroDone] = useState(false);
 
   useEffect(() => {
-    // 8 second wait as requested
     const timer = setTimeout(() => setIsIntroDone(true), 8000);
     return () => clearTimeout(timer);
   }, []);
 
   const heroColumns = [
     [
-      "https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/67a35bcec1e6dee368c62d25_dhk_Logo.webp",
+
       'https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/6913007efd068dff00aabfe4_01---H0_HERO_3of9.jpg',
+      "https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/67a35bcec1e6dee368c62d25_dhk_Logo.webp",
     ],
     [
       'https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/6913011d3d3a260559af0846_01---H0_HERO_4of9.jpg',
@@ -301,49 +301,8 @@ const HomePage = () => {
       );
     });
 
-    const journalCards = document.querySelectorAll('.journal-card');
-    journalCards.forEach((card) => {
-      const imageWrapper = card.querySelector('.journal-image-wrapper');
-      const img = card.querySelector('img');
-      const content = card.querySelector('.journal-content');
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: card,
-          start: "top 85%",
-        }
-      });
-
-      if (imageWrapper && img) {
-        tl.fromTo(imageWrapper,
-          { clipPath: 'inset(100% 0% 0% 0%)' },
-          {
-            clipPath: 'inset(0% 0% 0% 0%)',
-            duration: 1.2,
-            ease: "power3.inOut"
-          }
-        )
-          .fromTo(img,
-            { scale: 1.3 },
-            { scale: 1, duration: 1.2, ease: "power3.out" },
-            "<"
-          );
-      }
-
-      if (content) {
-        tl.fromTo(content,
-          { y: 20, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            ease: "power3.out"
-          },
-        );
-      }
-    });
-
-    const imageWrappers = document.querySelectorAll('.story_image_wrapper'); // Removed .journal-image-wrapper to prevent double animation
+    const imageWrappers = document.querySelectorAll('.story_image_wrapper');
     imageWrappers.forEach((wrapper) => {
       const img = wrapper.querySelector('img');
       if (img) {
@@ -482,6 +441,7 @@ const HomePage = () => {
     };
   }, []);
 
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -561,15 +521,6 @@ const HomePage = () => {
               ))}
             </div>
           ))}
-        </div>
-
-        <div className="hero-content z-[100]">
-          <div className="header-left" style={{ color: '#fff' }}>
-            <span className="hero-title-large">welcome to dhk</span>
-          </div>
-          <div style={{ fontSize: '0.8rem', opacity: 0.8, fontWeight: 700 }}>
-            architects, urban designers, interior designers →
-          </div>
         </div>
       </section>
 
@@ -741,17 +692,17 @@ const HomePage = () => {
         <div className="section-title-large reveal-on-scroll">journal</div>
         <div className="journal-grid">
           {journalItems.map((item, idx) => (
-            <div key={idx} className="journal-card">
+            <div className="journal-card">
               <div className="journal-image-wrapper">
                 <img src={item.image} alt={item.title} />
                 <div className="journal-view-article">[ view article ]</div>
               </div>
-              <div className="journal-content">
-                <div className="journal-meta">
+              <div className="journal-meta">
+                <div className="journal-header">
                   <span className="journal-tag">{item.type}</span>
                   <h3 className="journal-card-title">{item.title}</h3>
-                  <div className="journal-card-description">{item.description}</div>
                 </div>
+                <div className="journal-card-description">{item.description}</div>
               </div>
             </div>
           ))}
@@ -768,7 +719,6 @@ const HomePage = () => {
               POPI + PAIA
             </a>
           </div>
-
           <div className="col-span-1 md:col-span-9 flex flex-wrap md:flex-row justify-between md:justify-end gap-y-10 gap-x-4 md:gap-16 w-full">
             <div className="w-full md:w-auto flex flex-col gap-4">
 

@@ -725,24 +725,6 @@ ul {
   transform: translateY(-10%) scale(1.05);
 }
 
-.journal-meta {
-  display: flex;
-  align-items: flex-start;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.journal-tag {
-  background: #fff;
-  color: #000 !important;
-  padding: 4px 10px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: lowercase;
-  white-space: nowrap;
-  display: inline-block;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
 
 .journal-card:hover .journal-tag {
   transform: translateY(-2px);
@@ -750,12 +732,14 @@ ul {
 }
 
 .journal-card-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  line-height: 1.3;
-  margin-bottom: 0;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  flex: 1;
+  margin-left: auto;   
+  text-align: right;
+  color: rgb(255, 255, 255);
+  font-family: HelveticaNowDisplay, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  display: block;
 }
 
 .journal-card:hover .journal-card-title {
@@ -763,36 +747,41 @@ ul {
 }
 
 .journal-card-description {
-  font-size: 0.85rem;
-  line-height: 1.6;
-  color: #fff;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  opacity: 0;
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  transform: translateY(20px);
-  pointer-events: none;
-  margin-top: 10px;
+  display: block;
+
   font-size: 14px;
   line-height: 1.5;
+  color: #999999;
+
+  margin-top: 4px;
+
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.5s ease;
+
+  min-height: 60px;
 }
 
 .journal-card:hover .journal-card-description {
   opacity: 1;
   transform: translateY(0);
-  opacity: 0.9;
-  color: #999999;
-  font-weight: 700;
 }
+.journal-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;      /* vertical breathing space */
+}
+
+.journal-tag {
+  margin-right: 20px;   /* ← THIS CREATES SPACE */
+}
+
+.journal-card-title {
+  margin-left: auto;    /* pushes title to right */
+  text-align: right;
+}
+
+
 
 .journal-view-article {
   position: absolute;
@@ -807,6 +796,16 @@ ul {
   pointer-events: none;
   text-transform: lowercase;
 }
+.journal-meta {
+  display: block;           /* vertical stacking */
+  padding-top: 12px;        /* space below image */
+}
+.journal-text {
+  display: block;
+}
+
+
+
 
 /* Studio Section */
 .studio-hero-grid {
