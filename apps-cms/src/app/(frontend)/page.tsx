@@ -181,10 +181,10 @@ const HomePage = () => {
 
     const items = [
       {
-        type: "insights",
-        title: "key themes + takeaways from the architecture.za 2025 conference",
-        image: "https://cdn.prod.website-files.com/67483fb596664fd411a9d07f/68ed0cf6195f31e04fb2e628_CBD_1_REVB_-Recovered.jpg",
-        description: "The AZA2025 conference in Johannesburg revealed a profession at a crossroads, wrestling with tradition, disruption and an expanding definition of architectural practice. Three central themes emerged from under the umbrella of Architecture Meets Us/Planet/Future."
+        type: "people",
+        title: "celebrating women 24/7/365",
+        image: "https://cdn.prod.website-files.com/67483fb596664fd411a9d07f/689d9875379e930c3fb7d022_diversity.avif",
+        description: "The history of the commemoration of Women's Day is a vital reminder of how important women's voices are in driving change."
       },
       {
         type: "press",
@@ -194,16 +194,18 @@ const HomePage = () => {
       },
       {
         type: "insights",
+        title: "key themes + takeaways from the architecture.za 2025 conference",
+        image: "https://cdn.prod.website-files.com/67483fb596664fd411a9d07f/6968c0e7e596b3748b5cc3a5_07---J1_Cover_6.jpg",
+        description: "The AZA2025 conference in Johannesburg revealed a profession at a crossroads, wrestling with tradition, disruption and an expanding definition of architectural practice. Three central themes emerged from under the umbrella of Architecture Meets Us/Planet/Future."
+      },
+
+      {
+        type: "insights",
         title: "dhk in the cape town cbd: chapter 1",
         image: "https://cdn.prod.website-files.com/67483fb596664fd411a9d07f/68caa6ce541744ec81a36b35_07---J1_Cover.avif",
         description: "As the city's fortunes have evolved, so too has the skyline. And we look back through time from then to now."
       },
-      {
-        type: "people",
-        title: "celebrating women 24/7/365",
-        image: "https://cdn.prod.website-files.com/67483fb596664fd411a9d07f/689d9875379e930c3fb7d022_diversity.avif",
-        description: "The history of the commemoration of Women's Day is a vital reminder of how important women's voices are in driving change."
-      },
+
       {
         type: "career",
         title: "in conversation with dhk associate sarah tarr",
@@ -494,61 +496,68 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <section className="hero-section relative w-full h-screen overflow-hidden bg-black text-white">
-        {!isIntroDone && (
-          <div className="absolute top-0 left-0 w-full h-1 bg-gray-800 z-50">
-            <div className="h-full bg-white transition-all duration-[8000ms] ease-linear w-full" style={{ width: isIntroDone ? '100%' : '0%' }}></div>
-          </div>
-        )}
-
-        <div className="absolute inset-0 z-0 grid grid-cols-3 w-full h-full gap-0">
-          {heroColumns.map((colImages, colIndex) => (
-            <div key={colIndex} className={`col-${colIndex} relative w-full h-full overflow-hidden`}>
-              {colImages.map((src, imgIndex) => (
-                <div
-                  key={imgIndex}
-                  className="hero-stack-image absolute inset-0 w-full h-full"
-                  style={{
-                    zIndex: colImages.length - imgIndex
-                  }}
-                >
-                  <img
-                    src={src}
-                    className=""
-                    alt=""
-                  />
-                </div>
-              ))}
+        <section className="hero-section relative w-full h-[80dvh] overflow-hidden bg-black text-white">
+          {!isIntroDone && (
+            <div className="absolute top-0 left-0 w-full h-1 bg-gray-800 z-50">
+              <div
+                className="h-full bg-white transition-all duration-[8000ms] ease-linear w-full"
+                style={{ width: isIntroDone ? '100%' : '0%' }}
+              ></div>
             </div>
-          ))}
-        </div>
-      </section>
+          )}
 
-      <header className="main-header" style={{ mixBlendMode: isMenuOpen ? 'difference' : 'normal' }}>
-        <div className="header-left">
-          <a href="/" className="header-logo" style={{ color: isMenuOpen ? '#fff' : 'inherit' }}>
-            <span className="home-dot"></span> home
-          </a>
-        </div>
-        <div className="header-center">
-          <nav className="header-nav">
-            <a href="#projects" className="nav-link">projects,</a>
-            <a href="#studio" className="nav-link">studio,</a>
-            <a href="#journal" className="nav-link">journal,</a>
-            <a href="#careers" className="nav-link">careers ↗</a>
-          </nav>
-        </div>
-        <div className="header-right">
-          <button className="theme-toggle" onClick={toggleDarkMode}>
-            <span className={isDarkMode ? 'active' : ''}>dark</span>
-            <span className="separator"> / </span>
-            <span className={!isDarkMode ? 'active' : ''}>light</span>
-          </button>
-          <button className="menu-toggle" onClick={toggleMenu}>
-            menu
-          </button>
-        </div>
-      </header>
+          <div className="absolute inset-0 z-0 grid grid-cols-3 w-full h-full gap-0">
+            {heroColumns.map((colImages, colIndex) => (
+              <div key={colIndex} className={`col-${colIndex} relative w-full h-full overflow-hidden`}>
+                {colImages.map((src, imgIndex) => (
+                  <div
+                    key={imgIndex}
+                    className="hero-stack-image absolute inset-0 w-full h-full"
+                    style={{
+                      zIndex: colImages.length - imgIndex
+                    }}
+                  >
+                    <img
+                      src={src}
+                      alt=""
+                    />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <header
+          className="main-header relative w-full z-40"
+          style={{ mixBlendMode: isMenuOpen ? 'difference' : 'normal' }}
+        >
+          <div className="header-left">
+            <a href="/" className="header-logo" style={{ color: isMenuOpen ? '#fff' : 'inherit' }}>
+              <span className="home-dot"></span> home
+            </a>
+          </div>
+          <div className="header-center">
+            <nav className="header-nav">
+              <a href="#projects" className="nav-link">projects,</a>
+              <a href="#studio" className="nav-link">studio,</a>
+              <a href="#journal" className="nav-link">journal,</a>
+              <a href="#careers" className="nav-link">careers ↗</a>
+            </nav>
+          </div>
+          <div className="header-right">
+            <button className="theme-toggle" onClick={toggleDarkMode}>
+              <span className={isDarkMode ? 'active' : ''}>dark</span>
+              <span className="separator"> / </span>
+              <span className={!isDarkMode ? 'active' : ''}>light</span>
+            </button>
+            <button className="menu-toggle" onClick={toggleMenu}>
+              menu
+            </button>
+          </div>
+        </header>
+
+
 
       <section className="we_section">
         <div className="we_contain">
@@ -609,7 +618,6 @@ const HomePage = () => {
             <div className="project-overlay-title">{project.name}</div>
           </div>
         ))}
-
         <div className="projects-footer-grid">
           <div className="footer-project-box box-1 reveal-on-scroll">
             <img
@@ -770,5 +778,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
 
