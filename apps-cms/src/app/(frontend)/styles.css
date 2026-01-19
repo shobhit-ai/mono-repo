@@ -870,20 +870,23 @@ ul {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* Perfectly centered */
   z-index: 20;
   color: #fff;
   font-weight: 700;
   font-size: 1rem;
-  pointer-events: none;
-  /* Let clicks pass through to card */
   mix-blend-mode: difference;
-  /* Ensure visibility */
   opacity: 0;
-  /* Hidden by default */
+  transition: all 0.4s ease;
 }
 
 
+.journal-card.active {
+  cursor: pointer;
+}
+.journal-card.active .journal-view-article {
+  opacity: 1;
+  cursor: pointer;
+}
 
 .journal-card-description {
   font-size: 14px;
@@ -901,6 +904,11 @@ ul {
   /* Collapse height */
   overflow: hidden;
   /* Hide content */
+}
+
+.journal-image-wrapper:hover .journal-view-article {
+  opacity: 1;
+  cursor: pointer;
 }
 
 .journal-text {

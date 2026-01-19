@@ -528,7 +528,6 @@ const HomePage = () => {
         card.removeEventListener("mouseleave", onMouseLeave);
       };
 
-
     });
 
     return () => {
