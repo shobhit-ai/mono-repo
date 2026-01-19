@@ -614,9 +614,7 @@ const HomePage = () => {
 
       const reveal = card.querySelector(".bottom-reveal");
       const name = card.querySelector(".project-name");
-
       gsap.set(name, { opacity: 0, y: 20 });
-
       card.addEventListener("mouseenter", () => {
         gsap.to(reveal, {
           height: "5%",
@@ -711,7 +709,8 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <div className="home-intro-wrapper w-full relative">
+      
+      <div className="home-intro-wrapper w-full relative"> 
         <section
           className="hero-section relative w-full overflow-hidden bg-black text-white"
           style={{ height: 'calc(100vh - 80px)' }}
@@ -746,8 +745,9 @@ const HomePage = () => {
             ))}
           </div>
         </section>
+
         <header
-          className="main-header w-full z-40"
+          className="main-header w-full z-40 absolute bottom-0 left-0"
           style={{ mixBlendMode: isMenuOpen ? 'difference' : 'normal' }}
         >
           <div className="header-left">
@@ -774,6 +774,7 @@ const HomePage = () => {
             </button>
           </div>
         </header>
+        
       </div>
 
       <section className="we_section">
@@ -836,7 +837,7 @@ const HomePage = () => {
           >
             <img src={project.image} alt={project.name} />
             <div className="bottom-reveal">
-              <h3 style={{ paddingLeft: "20px" }}>{project.name}</h3>
+              <h3 className="project-name" style={{ paddingLeft: "20px"}}>{project.name}</h3>
             </div>
           </div>
         ))}
