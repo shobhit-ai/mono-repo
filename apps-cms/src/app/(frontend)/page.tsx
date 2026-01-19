@@ -27,6 +27,7 @@ const HomePage = () => {
   const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
   const studioRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [hoveredAwardIndex, setHoveredAwardIndex] = useState<number | null>(null);
+  const [awardTop, setAwardTop] = useState(0);
   const [isIntroDone, setIsIntroDone] = useState(false);
 
   useEffect(() => {
@@ -901,7 +902,18 @@ const HomePage = () => {
         <div className="awards-title reveal-on-scroll">awards</div>
         <div className="awards-reveal-container">
           {hoveredAwardIndex !== null && awards[hoveredAwardIndex].logo && (
-            <div className="awards-logo-reveal">
+            <div
+              className="awards-logo-reveal"
+              style={{
+                position: 'absolute',
+                top: awardTop,
+                left: 0,
+                right: 0,
+                margin: '0 auto',
+                zIndex: 20,
+                transition: 'top 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+              }}
+            >
               <img src={awards[hoveredAwardIndex].logo} alt="award logo" />
             </div>
           )}
@@ -911,7 +923,10 @@ const HomePage = () => {
             <div
               key={idx}
               className={`award-row reveal-on-scroll ${hoveredAwardIndex === idx ? 'active' : ''}`}
-              onMouseEnter={() => setHoveredAwardIndex(idx)}
+              onMouseEnter={(e) => {
+                setHoveredAwardIndex(idx);
+                setAwardTop(e.currentTarget.offsetTop);
+              }}
               onMouseLeave={() => setHoveredAwardIndex(null)}
             >
               <div className="award-year">{award.year}</div>
@@ -962,14 +977,12 @@ const HomePage = () => {
           </div>
           <div className="col-span-1 md:col-span-9 flex flex-wrap md:flex-row justify-between md:justify-end gap-y-10 gap-x-4 md:gap-16 w-full">
             <div className="w-full md:w-auto flex flex-col gap-4">
-
               <a href="#" className="flex items-center text-base font-bold leading-snug lowercase transition-opacity duration-300 hover:opacity-60">
                 <span className="w-3 flex justify-start">
                   <span className="w-1.5 h-1.5 bg-white rounded-full mr-0.5"></span>
                 </span>
                 home
               </a>
-
               <a href="#projects" className="text-base font-bold leading-snug lowercase hover:opacity-60">projects</a>
               <a href="#studio" className="text-base font-bold leading-snug lowercase hover:opacity-60">studio</a>
               <a href="#journal" className="text-base font-bold leading-snug lowercase hover:opacity-60">journal</a>
@@ -1011,4 +1024,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-

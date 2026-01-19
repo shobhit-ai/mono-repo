@@ -648,9 +648,10 @@ ul {
 .awards-reveal-container {
   position: relative;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
+  /* Center the image horizontally */
   align-items: flex-start;
-  padding-top: 15vh;
+  /* Removed padding-top to ensure alignment with list */
 }
 
 .awards-logo-reveal {
@@ -674,6 +675,7 @@ ul {
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
 }
 
 .award-row {
@@ -685,6 +687,7 @@ ul {
   font-size: 0.82rem;
   transition: all 0.3s ease;
   color: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
 }
 
 .award-row.active {
@@ -721,7 +724,7 @@ ul {
   display: flex;
   gap: 15px;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   width: 100%;
   text-transform: lowercase;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
