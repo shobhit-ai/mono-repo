@@ -23,6 +23,7 @@ const HomePage = () => {
   const col1Ref = useRef(null);
   const col2Ref = useRef(null);
   const col3Ref = useRef(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const [hoveredAwardIndex, setHoveredAwardIndex] = useState<number | null>(null);
   const [isIntroDone, setIsIntroDone] = useState(false);
 
@@ -33,13 +34,14 @@ const HomePage = () => {
 
   const heroColumns = [
     [
-
-      'https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/6913007efd068dff00aabfe4_01---H0_HERO_3of9.jpg',
       "https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/67a35bcec1e6dee368c62d25_dhk_Logo.webp",
+      'https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/6913007efd068dff00aabfe4_01---H0_HERO_3of9.jpg'
+
     ],
     [
-      'https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/6913011d3d3a260559af0846_01---H0_HERO_4of9.jpg',
-      'https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/691300f826c9e59084f1de99_01---H0_HERO_1of9.jpg'
+      'https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/691300f826c9e59084f1de99_01---H0_HERO_1of9.jpg',
+      'https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/6913011d3d3a260559af0846_01---H0_HERO_4of9.jpg'
+
     ],
     [
       'https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/6913013db3ed936bd259f69e_01---H0_HERO_2of9.jpg',
@@ -269,7 +271,6 @@ const HomePage = () => {
             invalidateOnRefresh: true
           }
         });
-
       }
     };
 
@@ -430,6 +431,24 @@ const HomePage = () => {
       updateWeSection();
     }
 
+    const journalCards = document.querySelectorAll('.journal-card');
+    if (journalCards.length > 0) {
+      gsap.fromTo(journalCards,
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".journal-grid",
+            start: "top 80%",
+          }
+        }
+      );
+    }
+
     return () => {
       window.removeEventListener('resize', handleResize);
       magneticHandlers.forEach(({ element, onMouseEnter, onMouseLeave, onMouseMove }) => {
@@ -442,6 +461,70 @@ const HomePage = () => {
       document.documentElement.classList.remove('dark-mode');
     };
   }, []);
+
+  useEffect(() => {
+    cardsRef.current.forEach((card) => {
+      if (!card) return;
+
+      const desc = card.querySelector(".blog-desc");
+      const overlay = card.querySelector(".view-article");
+
+      if (desc) gsap.set(desc, { height: 0, opacity: 0, marginTop: 0, overflow: 'hidden' });
+      if (overlay) gsap.set(overlay, { opacity: 0, y: 20 });
+
+      const onMouseEnter = () => {
+        gsap.to(desc, {
+          height: "auto",
+          opacity: 1,
+          marginTop: "40px",
+          duration: 0.5,
+          ease: "power3.out",
+        });
+
+        gsap.to(overlay, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: "power3.out",
+        });
+      };
+
+      const onMouseLeave = () => {
+        gsap.to(desc, {
+          height: 0,
+          opacity: 0,
+          marginTop: 0,
+          duration: 0.4,
+          ease: "power3.out",
+        });
+
+        gsap.to(overlay, {
+          opacity: 0,
+          y: 20,
+          duration: 0.4,
+          ease: "power3.out",
+        });
+      };
+
+      card.addEventListener("mouseenter", onMouseEnter);
+      card.addEventListener("mouseleave", onMouseLeave);
+
+      (card as any)._cleanup = () => {
+        card.removeEventListener("mouseenter", onMouseEnter);
+        card.removeEventListener("mouseleave", onMouseLeave);
+      };
+
+
+    });
+
+    return () => {
+      cardsRef.current.forEach(card => {
+        if (card && (card as any)._cleanup) {
+          (card as any)._cleanup();
+        }
+      });
+    };
+  }, [journalItems]);
 
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -470,6 +553,7 @@ const HomePage = () => {
     setIsDarkMode(!isDarkMode);
     document.documentElement.classList.toggle('dark-mode');
   };
+
 
   return (
     <div className={`dhk-website`}>
@@ -617,7 +701,7 @@ const HomePage = () => {
         {featuredProjects.map((project, idx) => (
           <div key={idx} className="featured-project-item">
             <img src={project.image} alt={project.name} />
-            <div className="project-overlay-title">{project.name}</div>
+            {/* <div className="project-overlay-title">{project.name}</div> */}
           </div>
         ))}
         <div className="projects-footer-grid">
@@ -702,17 +786,17 @@ const HomePage = () => {
         <div className="section-title-large reveal-on-scroll">journal</div>
         <div className="journal-grid">
           {journalItems.map((item, idx) => (
-            <div className="journal-card" key={idx}>
+            <div className="journal-card" key={idx} ref={(el) => { cardsRef.current[idx] = el; }}>
               <div className="journal-image-wrapper">
                 <img src={item.image} alt={item.title} />
-                <div className="journal-view-article">[ view article ]</div>
-              </div>
-              <div className="journal-meta">
-                <div className="journal-header">
-                  <span className="journal-tag">{item.type}</span>
-                  <h3 className="journal-card-title">{item.title}</h3>
+                <div className="journal-view-article view-article">[ view article ]</div>
+                <div className="journal-meta">
+                  <div className="journal-header">
+                    <span className="journal-tag">{item.type}</span>
+                    <h3 className="journal-card-title">{item.title}</h3>
+                  </div>
+                  <div className="journal-card-description blog-desc">{item.description}</div>
                 </div>
-                <div className="journal-card-description">{item.description}</div>
               </div>
             </div>
           ))}
@@ -721,6 +805,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+
       <footer className="bg-black text-white px-8 md:px-8 pt-20 md:pt-48 pb-10 mt-20 md:mt-20" style={{ marginTop: "100px", paddingBottom: "20px" }}>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-1.5 items-start md:items-end">
           <div className="order-last md:order-first col-span-1 md:col-span-3 flex flex-col md:flex-row gap-4 text-sm md:text-base font-medium leading-snug items-start md:items-center opacity-50 md:opacity-100">

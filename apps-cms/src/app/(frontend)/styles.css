@@ -704,22 +704,24 @@ ul {
   gap: 20px;
 }
 
+/* Removed gap to make images touch */
 @media (min-width: 768px) {
   .journal-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
+    gap: 0;
   }
 }
 
 .journal-card {
   position: relative;
-  margin-right: 20px;
+  /* margin-right: 20px; Removed per request */
+  margin: 0;
 }
 
 .journal-image-wrapper {
   width: 100%;
-  aspect-ratio: 1/1;
-  /* Square images as requested: same height and width */
+  aspect-ratio: 3/4;
+  /* Taller image */
   overflow: hidden;
   position: relative;
   margin-bottom: 0;
@@ -732,91 +734,133 @@ ul {
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.journal-card:hover .journal-image-wrapper img {
-  transform: translateY(-10%) scale(1.05);
-}
-
 .journal-card:hover .journal-card-title {
-  transform: translateX(3px);
-  transition: transform 0.3s ease;
+  /* No transform needed if sliding up */
 }
 
-.journal-card:hover .journal-tag {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.journal-card:hover .journal-card-title {
-  transform: translateX(5px);
+.journal-card {
+  cursor: pointer;
+  /* Show pointer cursor */
+  position: relative;
+  margin: 0;
 }
 
 .journal-card-description {
   font-size: 14px;
   line-height: 1.5;
-  color: #999999;
-  padding-top: 20px;
-  margin-top: 10px;
-
+  color: #ccc;
+  padding-top: 0;
+  margin-top: 0;
   opacity: 0;
-  transform: translateY(12px);
-  transition: all 0.5s ease;
-
-  text-align: right;
-  max-width: 90%;
+  /* transform: translateY(12px); Removed to avoid GSAP conflict */
+  text-align: left;
+  max-width: 100%;
+  order: 2;
+  will-change: height, opacity;
 }
 
-.journal-card:hover .journal-card-description {
+/* .journal-card:hover .journal-card-description {
   opacity: 1;
   transform: translateY(0);
-}
+} REMOVED - GeSAP handles this */
 
-.journal-tag {
-  background: white;
-  color: black;
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 8px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-  /* Remove float: right */
+.journal-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+  padding: 20px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  pointer-events: auto;
+  background-color: #000;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
 }
 
 .journal-header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
   width: 100%;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  gap: 15px;
+}
+
+.journal-tag {
+  position: relative;
+  background: white;
+  color: black;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: lowercase;
+  letter-spacing: -0.2px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  margin-bottom: 0;
 }
 
 .journal-card-title {
-  flex: 1;
-  margin-right: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  line-height: normal;
+  margin: 0;
+  text-align: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 0;
 }
 
+.bottom-reveal {
+  background-color: #000;
+}
 
 .journal-view-article {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  /* Perfectly centered */
+  z-index: 20;
   color: #fff;
   font-weight: 700;
-  font-size: 0.8rem;
-  opacity: 0;
-  transition: opacity 0.4s ease;
+  font-size: 1rem;
   pointer-events: none;
-  text-transform: lowercase;
+  /* Let clicks pass through to card */
+  mix-blend-mode: difference;
+  /* Ensure visibility */
+  opacity: 0;
+  /* Hidden by default */
 }
 
-.journal-meta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  /* everything align right */
-  text-align: right;
-  padding-top: 12px;
+
+
+.journal-card-description {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #ccc;
+  padding-top: 0;
+  /* Removed padding top to fully collapse */
+  margin-top: 0;
+  margin-left: 0;
+  text-align: left;
+  max-width: 100%;
+  opacity: 0;
+  transform: translateY(12px);
+  height: 0;
+  /* Collapse height */
+  overflow: hidden;
+  /* Hide content */
 }
 
 .journal-text {
