@@ -897,8 +897,6 @@ const HomePage = () => {
         </div>
       </section>
 
-
-
       <section className="container awards-section">
         <div className="awards-title reveal-on-scroll">awards</div>
         <div className="awards-reveal-container">
