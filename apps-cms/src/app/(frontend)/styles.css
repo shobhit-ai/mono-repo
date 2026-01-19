@@ -477,7 +477,6 @@ ul {
 .featured-project-item {
   position: relative;
 }
-
 .project-view-overlay {
   position: absolute;
   top: 50%;
@@ -763,7 +762,7 @@ ul {
 .journal-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
+  gap: 40px;
 }
 
 /* Removed gap to make images touch */
@@ -814,17 +813,13 @@ ul {
   padding-top: 0;
   margin-top: 0;
   opacity: 0;
-  /* transform: translateY(12px); Removed to avoid GSAP conflict */
-  text-align: left;
+  text-align: right;
   max-width: 100%;
   order: 2;
   will-change: height, opacity;
+  padding-bottom: 10px;
 }
 
-/* .journal-card:hover .journal-card-description {
-  opacity: 1;
-  transform: translateY(0);
-} REMOVED - GeSAP handles this */
 
 .journal-meta {
   display: flex;
@@ -906,28 +901,9 @@ ul {
 .journal-card.active {
   cursor: pointer;
 }
-
 .journal-card.active .journal-view-article {
   opacity: 1;
   cursor: pointer;
-}
-
-.journal-card-description {
-  font-size: 14px;
-  line-height: 1.5;
-  color: #ccc;
-  padding-top: 0;
-  /* Removed padding top to fully collapse */
-  margin-top: 0;
-  margin-left: 0;
-  text-align: left;
-  max-width: 100%;
-  opacity: 0;
-  transform: translateY(12px);
-  height: 0;
-  /* Collapse height */
-  overflow: hidden;
-  /* Hide content */
 }
 
 .journal-image-wrapper:hover .journal-view-article {
@@ -1536,11 +1512,6 @@ ul {
     text-align: left;
     opacity: 0.5;
     font-size: 0.75rem;
-  }
-
-  .journal-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
   }
 
   .menu-nav-link {
