@@ -881,6 +881,7 @@ ul {
 .bottom-reveal {
   background-color: #000000;
   color: #fff;
+  width: 100%;
 }
 
 .journal-view-article {
@@ -896,7 +897,6 @@ ul {
   opacity: 0;
   transition: all 0.4s ease;
 }
-
 
 .journal-card.active {
   cursor: pointer;
@@ -1445,6 +1445,26 @@ ul {
     display: flex;
     flex-direction: column;
   }
+
+
+.project-info {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center;
+  width: 100% !important;
+}
+
+.project-title {
+  text-align: left;
+}
+
+.project-year {
+  text-align: right;
+}
+
+
+
+
 
   .featured-project-item img {
     height: 50vh;

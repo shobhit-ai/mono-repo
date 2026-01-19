@@ -807,7 +807,7 @@ const HomePage = () => {
             />
           </div>
         </div >
-      </section >
+      </section>
 
       <section className="story_section">
         <div className="story_grid">
