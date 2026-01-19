@@ -477,8 +477,6 @@ ul {
 .featured-project-item {
   position: relative;
   overflow: hidden;
-  margin-bottom: 2rem;
-  /* Adjust as needed */
 }
 
 .project-image-container {
@@ -489,19 +487,56 @@ ul {
   /* Adjust based on your design */
 }
 
-
-
 .featured-project-item img {
   width: 100%;
   height: 100vh;
   object-fit: cover;
   display: block;
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
+  /* Removed transition/will-change for static image requirement */
 }
 
 .featured-project-item:hover img {
-  transform: scale(1.03);
+  transform: none;
+}
+
+.project-info-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff;
+  padding: 40px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.project-info-header {
+  margin-bottom: 12px;
+}
+
+.project-name {
+  font-family: 'Helveticanowdisplay', Arial, sans-serif;
+  font-size: 40px;
+  font-weight: 500;
+  color: #000000;
+  margin: 0;
+  line-height: 1.1;
+  text-transform: lowercase;
+}
+
+.project-location {
+  font-size: 14px;
+  color: #666666;
+  margin-top: 4px;
+}
+
+.project-description {
+  color: #333333;
+  font-size: 16px;
+  line-height: 1.5;
+  max-width: 600px;
 }
 
 .projects-footer-grid {
@@ -822,7 +857,8 @@ ul {
 }
 
 .bottom-reveal {
-  background-color: #000;
+  background-color: #000000;
+  color:#fff;
 }
 
 .journal-view-article {
@@ -1406,13 +1442,6 @@ ul {
     font-size: 1.5rem;
     top: 20px;
     right: 20px;
-  }
-
-  .projects-footer-grid {
-    grid-template-columns: 1fr;
-    height: auto;
-    display: flex;
-    flex-direction: column;
   }
 
   .footer-project-box {

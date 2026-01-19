@@ -24,6 +24,7 @@ const HomePage = () => {
   const col2Ref = useRef(null);
   const col3Ref = useRef(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [hoveredAwardIndex, setHoveredAwardIndex] = useState<number | null>(null);
   const [isIntroDone, setIsIntroDone] = useState(false);
 
@@ -124,12 +125,13 @@ const HomePage = () => {
 
   const featuredProjects = [
     {
-      name: "radisson red ",
-      image: "https://cdn.prod.website-files.com/67483fb596664fd411a9d07f/67b208fda748d932f1e7b465_radisson.avif"
+      name: "Radisson Red",
+      image: "https://cdn.prod.website-files.com/67483fb596664fd411a9d07f/67b208fda748d932f1e7b465_radisson.avif",
+      location: "V&A Waterfront, Cape Town",
     }
   ];
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.documentElement.classList.add('dark-mode');
 
     gsap.fromTo('.main-header',
@@ -323,20 +325,6 @@ const HomePage = () => {
           }
         );
       }
-    });
-
-    const featuredProjectItems = document.querySelectorAll('.featured-project-item img');
-    featuredProjectItems.forEach((img) => {
-      gsap.to(img, {
-        y: -100,
-        ease: "none",
-        scrollTrigger: {
-          trigger: img,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.5,
-        }
-      });
     });
 
     const awardRows = document.querySelectorAll('.award-row');
@@ -555,6 +543,51 @@ const HomePage = () => {
   };
 
 
+
+  useEffect(() => {
+    projectRefs.current.forEach((card) => {
+      if (!card) return;
+
+      const reveal = card.querySelector(".bottom-reveal");
+      const name = card.querySelector(".project-name");
+
+      gsap.set(name, { opacity: 0, y: 20 });
+
+      card.addEventListener("mouseenter", () => {
+        gsap.to(reveal, {
+          height: "5%",
+          duration: 0.5,
+          ease: "power3.out",
+        });
+
+        gsap.to(name, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          delay: 0.2,
+          ease: "power3.out",
+        });
+      });
+
+      card.addEventListener("mouseleave", () => {
+        gsap.to(reveal, {
+          height: "0%",
+          duration: 0.5,
+          ease: "power3.out",
+        });
+
+        gsap.to(name, {
+          opacity: 0,
+          y: 20,
+          duration: 0.4,
+          ease: "power3.out",
+        });
+      });
+    });
+  }, []);
+
+
+
   return (
     <div className={`dhk-website`}>
       <div className="full-screen-menu" ref={menuRef}>
@@ -699,9 +732,11 @@ const HomePage = () => {
           <div className="featured-projects-title reveal-on-scroll">featured projects</div>
         </div>
         {featuredProjects.map((project, idx) => (
-          <div key={idx} className="featured-project-item">
+          <div key={idx} className="featured-project-item" ref={(el) => (projectRefs.current[idx] = el)}>
             <img src={project.image} alt={project.name} />
-            {/* <div className="project-overlay-title">{project.name}</div> */}
+             <div className="bottom-reveal">
+              <h3 style={{paddingLeft:"20px"}}>{project.name}</h3>
+             </div>
           </div>
         ))}
         <div className="projects-footer-grid">
@@ -865,4 +900,5 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
 
