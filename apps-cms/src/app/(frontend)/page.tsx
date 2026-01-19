@@ -25,6 +25,7 @@ const HomePage = () => {
   const col3Ref = useRef(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const studioRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [hoveredAwardIndex, setHoveredAwardIndex] = useState<number | null>(null);
   const [isIntroDone, setIsIntroDone] = useState(false);
 
@@ -129,6 +130,30 @@ const HomePage = () => {
       image: "https://cdn.prod.website-files.com/67483fb596664fd411a9d07f/67b208fda748d932f1e7b465_radisson.avif",
       location: "V&A Waterfront, Cape Town",
     }
+  ];
+
+  const footerProjects = [
+    {
+      img: "https://cdn.prod.website-files.com/67483fb596664fd411a9d07f/69157f48231611da536066e8_00---ProjectCover.jpg",
+      title: "City Park at 111 Bree Street",
+      year: "2026",
+    },
+    {
+      img: "https://cdn.prod.website-files.com/67483fb596664fd411a9d07f/67b20989c1f60844f1d0b422_seafront.avif",
+      title: "Seafront Estate",
+      year: "2026",
+    },
+  ];
+
+  const studioImages = [
+    {
+      img: "https://cdn.prod.website-files.com/67483fb596664fd411a9d07f/67b205a1c905ac76003fd88b_drostdy.avif",
+      alt: "Studio Workspace",
+    },
+    {
+      img: "https://cdn.prod.website-files.com/67483fb596664fd411a9d07f/67bc85cdbd612b2d12ceeaf1_signature_2.avif",
+      alt: "Studio Architecture",
+    },
   ];
 
   useLayoutEffect(() => {
@@ -544,6 +569,48 @@ const HomePage = () => {
 
 
 
+  // useEffect(() => {
+  //   projectRefs.current.forEach((card) => {
+  //     if (!card) return;
+
+  //     const reveal = card.querySelector(".bottom-reveal");
+  //     const name = card.querySelector(".project-name");
+
+  //     gsap.set(name, { opacity: 0, y: 20 });
+
+  //     card.addEventListener("mouseenter", () => {
+  //       gsap.to(reveal, {
+  //         height: "5%",
+  //         duration: 0.5,
+  //         ease: "power3.out",
+  //       });
+
+  //       gsap.to(name, {
+  //         opacity: 1,
+  //         y: 0,
+  //         duration: 0.5,
+  //         delay: 0.2,
+  //         ease: "power3.out",
+  //       });
+  //     });
+
+  //     card.addEventListener("mouseleave", () => {
+  //       gsap.to(reveal, {
+  //         height: "0%",
+  //         duration: 0.5,
+  //         ease: "power3.out",
+  //       });
+
+  //       gsap.to(name, {
+  //         opacity: 0,
+  //         y: 20,
+  //         duration: 0.4,
+  //         ease: "power3.out",
+  //       });
+  //     });
+  //   });
+  // }, []);
+
   useEffect(() => {
     projectRefs.current.forEach((card) => {
       if (!card) return;
@@ -586,6 +653,48 @@ const HomePage = () => {
     });
   }, []);
 
+
+  useEffect(() => {
+    studioRefs.current.forEach((card) => {
+      if (!card) return;
+
+      const reveal = card.querySelector(".bottom-reveal");
+      const name = card.querySelector(".project-name");
+
+      gsap.set(name, { opacity: 0, y: 20 });
+
+      card.addEventListener("mouseenter", () => {
+        gsap.to(reveal, {
+          height: "5%",
+          duration: 0.5,
+          ease: "power3.out",
+        });
+
+        gsap.to(name, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          delay: 0.2,
+          ease: "power3.out",
+        });
+      });
+
+      card.addEventListener("mouseleave", () => {
+        gsap.to(reveal, {
+          height: "0%",
+          duration: 0.5,
+          ease: "power3.out",
+        });
+
+        gsap.to(name, {
+          opacity: 0,
+          y: 20,
+          duration: 0.4,
+          ease: "power3.out",
+        });
+      });
+    });
+  }, []);
 
 
   return (
@@ -734,59 +843,64 @@ const HomePage = () => {
         {featuredProjects.map((project, idx) => (
           <div key={idx} className="featured-project-item" ref={(el) => (projectRefs.current[idx] = el)}>
             <img src={project.image} alt={project.name} />
-             <div className="bottom-reveal">
-              <h3 style={{paddingLeft:"20px"}}>{project.name}</h3>
-             </div>
+            <div className="bottom-reveal">
+              <h3 style={{ paddingLeft: "20px" }}>{project.name}</h3>
+            </div>
           </div>
         ))}
-        <div className="projects-footer-grid">
-          <div className="footer-project-box box-1 reveal-on-scroll">
-            <img
-              src="https://cdn.prod.website-files.com/67483fb596664fd411a9d07f/69157f48231611da536066e8_00---ProjectCover.jpg"
-              alt="City Park at 111 Bree Street"
-            />
-            <div className="footer-project-info">
-              <span>City Park at 111 Bree Street</span>
-              <span>2026</span>
-            </div>
-          </div>
-          <div className="footer-project-box box-2 reveal-on-scroll">
-            <img
-              src="https://cdn.prod.website-files.com/67483fb596664fd411a9d07f/67b20989c1f60844f1d0b422_seafront.avif"
-              alt="Seafront Estate"
-            />
-            <div className="footer-project-info">
-              <span>Seafront Estate</span>
-              <span>2026</span>
-            </div>
-          </div>
-          <div className="footer-project-box box-3 reveal-on-scroll">
-            <a href="#projects" className="view-all-projects">[&nbsp;&nbsp;&nbsp;view all projects&nbsp;&nbsp;&nbsp;]</a>
-          </div>
-        </div>
       </section>
 
       <section id="studio">
+        <div className="projects-footer-grid">
+          {footerProjects.map((project, index) => (
+            <div
+              key={index}
+              className={`footer-project-box box-${index + 1} reveal-on-scroll`}
+              ref={(el) => {
+                studioRefs.current[index] = el;
+              }}
+            >
+              <img src={project.img} alt={project.title} />
+              <div className="bottom-reveal">
+                <div>
+                  <span>{project.title}</span>
+                  <span>{project.year}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          <div className="footer-project-box box-3 reveal-on-scroll">
+            <a href="#projects" className="view-all-projects">
+              [&nbsp;&nbsp;&nbsp;view all projects&nbsp;&nbsp;&nbsp;]
+            </a>
+          </div>
+        </div>
+
         <div className="studio-hero-grid">
           <div className="studio-hero-box box-black"></div>
-          <div className="studio-hero-box reveal-on-scroll">
-            <img
-              src="https://cdn.prod.website-files.com/67483fb596664fd411a9d07f/67b205a1c905ac76003fd88b_drostdy.avif"
-              alt="Studio Workspace"
-            />
-          </div>
-          <div className="studio-hero-box reveal-on-scroll">
-            <img
-              src="https://cdn.prod.website-files.com/67483fb596664fd411a9d07f/67bc85cdbd612b2d12ceeaf1_signature_2.avif"
-              alt="Studio Architecture"
-            />
-          </div>
+          {studioImages.map((item, index) => (
+            <div
+              key={index}
+              className="studio-hero-box reveal-on-scroll"
+              ref={(el) => {
+                studioRefs.current[index + footerProjects.length] = el;
+              }}
+
+            >
+              <img src={item.img} alt={item.alt} />
+              <div className="bottom-reveal">
+                <span>{item.alt}</span>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
+
+
       <section className="container awards-section">
         <div className="awards-title reveal-on-scroll">awards</div>
-
         <div className="awards-reveal-container">
           {hoveredAwardIndex !== null && awards[hoveredAwardIndex].logo && (
             <div className="awards-logo-reveal">
@@ -794,7 +908,6 @@ const HomePage = () => {
             </div>
           )}
         </div>
-
         <div className="awards-list">
           {awards.map((award, idx) => (
             <div
@@ -900,5 +1013,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
 
