@@ -519,7 +519,6 @@ const HomePage = () => {
           ease: "power3.out",
         });
       };
-
       card.addEventListener("mouseenter", onMouseEnter);
       card.addEventListener("mouseleave", onMouseLeave);
 
@@ -527,7 +526,6 @@ const HomePage = () => {
         card.removeEventListener("mouseenter", onMouseEnter);
         card.removeEventListener("mouseleave", onMouseLeave);
       };
-
     });
 
     return () => {
@@ -566,50 +564,6 @@ const HomePage = () => {
     setIsDarkMode(!isDarkMode);
     document.documentElement.classList.toggle('dark-mode');
   };
-
-
-
-  // useEffect(() => {
-  //   projectRefs.current.forEach((card) => {
-  //     if (!card) return;
-
-  //     const reveal = card.querySelector(".bottom-reveal");
-  //     const name = card.querySelector(".project-name");
-
-  //     gsap.set(name, { opacity: 0, y: 20 });
-
-  //     card.addEventListener("mouseenter", () => {
-  //       gsap.to(reveal, {
-  //         height: "5%",
-  //         duration: 0.5,
-  //         ease: "power3.out",
-  //       });
-
-  //       gsap.to(name, {
-  //         opacity: 1,
-  //         y: 0,
-  //         duration: 0.5,
-  //         delay: 0.2,
-  //         ease: "power3.out",
-  //       });
-  //     });
-
-  //     card.addEventListener("mouseleave", () => {
-  //       gsap.to(reveal, {
-  //         height: "0%",
-  //         duration: 0.5,
-  //         ease: "power3.out",
-  //       });
-
-  //       gsap.to(name, {
-  //         opacity: 0,
-  //         y: 20,
-  //         duration: 0.4,
-  //         ease: "power3.out",
-  //       });
-  //     });
-  //   });
-  // }, []);
 
   useEffect(() => {
     projectRefs.current.forEach((card) => {
@@ -876,7 +830,10 @@ const HomePage = () => {
           <div className="featured-projects-title reveal-on-scroll">featured projects</div>
         </div>
         {featuredProjects.map((project, idx) => (
-          <div key={idx} className="featured-project-item" ref={(el) => (projectRefs.current[idx] = el)}>
+          <div key={idx} className="featured-project-item hover-trigger-studio" ref={(el) => {
+            projectRefs.current[idx] = el;
+          }}
+          >
             <img src={project.image} alt={project.name} />
             <div className="bottom-reveal">
               <h3 style={{ paddingLeft: "20px" }}>{project.name}</h3>
