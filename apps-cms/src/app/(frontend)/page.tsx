@@ -698,6 +698,41 @@ const HomePage = () => {
   }, []);
 
 
+  useEffect(() => {
+    const cursorLabel = document.querySelector('.cursor-view-project-label');
+    const triggers = document.querySelectorAll('.hover-trigger-studio');
+
+    if (cursorLabel && triggers.length > 0) {
+      gsap.set(cursorLabel, { xPercent: -50, yPercent: -50, scale: 0, opacity: 0 });
+
+      const xTo = gsap.quickTo(cursorLabel, "x", { duration: 0.1, ease: "power3" });
+      const yTo = gsap.quickTo(cursorLabel, "y", { duration: 0.1, ease: "power3" });
+
+      const moveCursor = (e: MouseEvent) => {
+        xTo(e.clientX);
+        yTo(e.clientY);
+      };
+
+      window.addEventListener('mousemove', moveCursor);
+
+      const onEnter = () => gsap.to(cursorLabel, { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out' });
+      const onLeave = () => gsap.to(cursorLabel, { scale: 0, opacity: 0, duration: 0.3, ease: 'power2.in' });
+
+      triggers.forEach(el => {
+        el.addEventListener('mouseenter', onEnter);
+        el.addEventListener('mouseleave', onLeave);
+      });
+
+      return () => {
+        window.removeEventListener('mousemove', moveCursor);
+        triggers.forEach(el => {
+          el.removeEventListener('mouseenter', onEnter);
+          el.removeEventListener('mouseleave', onLeave);
+        });
+      };
+    }
+  }, []);
+
   return (
     <div className={`dhk-website`}>
       <div className="full-screen-menu" ref={menuRef}>
@@ -856,7 +891,7 @@ const HomePage = () => {
           {footerProjects.map((project, index) => (
             <div
               key={index}
-              className={`footer-project-box box-${index + 1} reveal-on-scroll`}
+              className={`footer-project-box box-${index + 1} reveal-on-scroll hover-trigger-studio`}
               ref={(el) => {
                 studioRefs.current[index] = el;
               }}
@@ -883,7 +918,7 @@ const HomePage = () => {
           {studioImages.map((item, index) => (
             <div
               key={index}
-              className="studio-hero-box reveal-on-scroll"
+              className="studio-hero-box reveal-on-scroll hover-trigger-studio"
               ref={(el) => {
                 studioRefs.current[index + footerProjects.length] = el;
               }}
@@ -1019,6 +1054,7 @@ const HomePage = () => {
           </div>
         </div>
       </footer>
+      <div className="cursor-view-project-label">[ view project ]</div>
     </div >
   );
 };

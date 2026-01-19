@@ -1520,3 +1520,26 @@ ul {
     gap: 40px;
   }
 }
+
+/* Custom Cursor Logic for Studio Section */
+.hover-trigger-studio {
+  cursor: none !important;
+}
+
+.cursor-view-project-label {
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  pointer-events: none;
+  z-index: 10000;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+  white-space: nowrap;
+  mix-blend-mode: difference;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
