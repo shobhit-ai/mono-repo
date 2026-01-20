@@ -830,7 +830,7 @@ const HomePage = () => {
 
       <div className="home-intro-wrapper w-full relative">
         <section
-          className="hero-section relative w-full overflow-hidden bg-black text-white"
+          className="hero-section relative w-full overflow-hidden"
           style={{ height: 'calc(80vh - 80px)' }}
         >
           {!isIntroDone && (
@@ -1004,10 +1004,10 @@ const HomePage = () => {
 
               <div className="bottom-reveal mobile-visible">
                 <div className="flex justify-between items-center w-full px-5 py-3">
-                  <span className="text-white text-sm md:text-base font-bold">
+                  <span className="text-sm md:text-base font-bold">
                     {project.title}
                   </span>
-                  <span className="text-white text-sm md:text-base font-bold">
+                  <span className="text-sm md:text-base font-bold">
                     {project.year}
                   </span>
                 </div>
@@ -1033,7 +1033,7 @@ const HomePage = () => {
             >
               <img src={item.img} alt={item.alt} className="w-full h-full object-cover" />
               <div className="bottom-reveal mobile-visible">
-                <span className="text-white text-sm md:text-base font-bold px-5 py-3">
+                <span className="text-sm md:text-base font-bold px-5 py-3">
                   {item.alt}
                 </span>
               </div>
@@ -1136,7 +1136,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      <footer className="bg-black text-white !pl-8 !pb-6 md:!pl-16 md:!pb-8 pr-4 md:px-8 !pt-40 !md:pt-96 !mt-40 !md:mt-40">
+      <footer className="dhk-footer !pl-8 !pb-6 md:!pl-16 md:!pb-8 pr-4 md:px-8 !pt-40 !md:pt-96 !mt-40 !md:mt-40">
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-6 items-start md:items-end">
           <div className="order-last md:order-first col-span-1 md:col-span-3 flex flex-col md:flex-row gap-4 text-sm md:text-base font-medium leading-snug items-start md:items-center opacity-50 md:opacity-100">

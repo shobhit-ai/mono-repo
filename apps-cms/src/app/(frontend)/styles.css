@@ -280,8 +280,8 @@ ul {
 }
 
 .we_section {
-  background-color: #000;
-  color: #fff;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   padding: 100px 0 0 0;
   position: relative;
   min-height: auto;
@@ -319,7 +319,7 @@ ul {
   text-transform: lowercase;
   display: inline-block;
   white-space: nowrap;
-  color: #FFFFFF;
+  color: var(--text-color);
 }
 
 .we_right {
@@ -334,7 +334,7 @@ ul {
   opacity: 1 !important;
   transition: opacity 0.3s ease;
   white-space: nowrap;
-  color: #FFFFFF !important;
+  color: var(--text-color) !important;
 }
 
 .we_right .we_item.active {
@@ -373,7 +373,7 @@ ul {
   font-size: 16px;
   font-weight: 500;
   line-height: 22.4px;
-  color: #fff;
+  color: var(--text-color);
   max-width: 500px;
 }
 
@@ -399,7 +399,7 @@ ul {
 
 .story_section {
   padding: 0 0 150px 0;
-  background: #000;
+  background: var(--bg-color);
 }
 
 .story_grid {
@@ -422,7 +422,7 @@ ul {
 
 .story_label {
   grid-column: 7;
-  color: #fff;
+  color: var(--text-color);
   font-weight: 700;
   font-size: 0.85rem;
   white-space: nowrap;
@@ -434,7 +434,7 @@ ul {
 
 .story_content {
   grid-column: 10 / span 3;
-  color: #fff;
+  color: var(--text-color);
   font-family: 'Helveticanowdisplay', Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
@@ -456,7 +456,7 @@ ul {
 
 .featured-projects {
   padding: 150px 0 0 0;
-  background: #000;
+  background: var(--bg-color);
 }
 
 .projects-title-grid {
@@ -475,7 +475,7 @@ ul {
   font-weight: 500;
   line-height: 1.1;
   text-transform: lowercase;
-  color: #fff;
+  color: var(--text-color);
 }
 
 .featured-project-item {
@@ -495,7 +495,7 @@ ul {
   pointer-events: none;
   top: 0;
   left: 0;
-  color: #ffffff !important;
+  color: var(--text-color) !important;
   font-size: 16px;
   font-weight: 500;
   opacity: 0;
@@ -513,7 +513,7 @@ ul {
   top: 50%;
   left: 50%;
   transform: translate(-50%, 20px);
-  color: #fff;
+  color: var(--text-color);
   font-weight: 700;
   font-size: 1rem;
   mix-blend-mode: difference;
@@ -557,7 +557,7 @@ ul {
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #ffffff;
+  background-color: var(--text-color);
   padding: 40px;
   z-index: 20;
   display: flex;
@@ -607,7 +607,7 @@ ul {
 
 .box-3 {
   grid-column: 9 / span 4;
-  background: #000;
+  background: var(--bg-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -620,9 +620,6 @@ ul {
   /* transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); */
 }
 
-.footer-project-box:hover img {
-  /* transform: scale(1.05); */
-}
 
 .footer-project-info {
   position: absolute;
@@ -631,14 +628,14 @@ ul {
   right: 20px;
   display: flex;
   justify-content: space-between;
-  color: #fff;
+  color: var(--text-color);
   font-size: 14px;
   font-weight: 700;
   text-transform: capitalize;
 }
 
 .view-all-projects {
-  color: #fff;
+  color: var(--text-color);
   font-weight: 700;
   font-size: 0.9rem;
   text-decoration: none;
@@ -647,7 +644,7 @@ ul {
 }
 
 .view-all-projects:hover {
-  border-bottom-color: #fff;
+  border-bottom-color: var(--text-color);
 }
 
 .project-overlay-title {
@@ -656,7 +653,7 @@ ul {
   right: 40px;
   font-size: clamp(2rem, 6vw, 4rem);
   font-weight: 800;
-  color: #fff;
+  color: var(--text-color);
   pointer-events: none;
   opacity: 0;
   transform: translateY(20px);
@@ -700,7 +697,7 @@ ul {
 .awards-logo-reveal {
   width: 130px;
   height: 130px;
-  background: #fff;
+  background: var(--text-color);
   padding: 15px;
   display: flex;
   align-items: center;
@@ -729,19 +726,20 @@ ul {
   border-bottom: 0px solid transparent;
   font-size: 0.82rem;
   transition: all 0.3s ease;
-  color: rgba(255, 255, 255, 0.25);
+  color: var(--text-color);
+  opacity: 0.25;
   cursor: pointer;
 }
 
 .award-row.active {
-  color: #ffffff;
+  opacity: 1;
 }
 
 .award-subtext {
   font-size: 0.75rem;
   font-weight: 700;
   margin-top: 5px;
-  color: #fff;
+  color: var(--text-color);
   opacity: 0.8;
 }
 
@@ -816,9 +814,6 @@ ul {
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.journal-card:hover .journal-card-title {
-  /* No transform needed if sliding up */
-}
 
 .journal-card {
   cursor: pointer;
@@ -830,7 +825,7 @@ ul {
 .journal-card-description {
   font-size: 14px;
   line-height: 1.5;
-  color: #ccc;
+  color: var(--text-color);
   padding-top: 0;
   margin-top: 0;
   opacity: 0;
@@ -855,7 +850,7 @@ ul {
   left: 0;
   z-index: 10;
   pointer-events: auto;
-  background-color: #000;
+  background-color: var(--bg-color);
   transform: translateY(0);
   transition: transform 0.3s ease;
 }
@@ -874,8 +869,8 @@ ul {
 
 .journal-tag {
   position: relative;
-  background: white;
-  color: black;
+  background: var(--text-color);
+  color: var(--bg-color);
   padding: 5px 12px;
   font-size: 11px;
   font-weight: 700;
@@ -889,7 +884,7 @@ ul {
 .journal-card-title {
   font-size: 16px;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-color);
   line-height: normal;
   margin: 0;
   text-align: left;
@@ -900,8 +895,8 @@ ul {
 }
 
 .bottom-reveal {
-  background-color: #000000;
-  color: #fff;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 .featured-project-item:hover .view-project-text {
@@ -914,7 +909,7 @@ ul {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 20;
-  color: #fff;
+  color: var(--text-color);
   font-weight: 700;
   font-size: 1rem;
   mix-blend-mode: difference;
@@ -967,7 +962,7 @@ ul {
 
 .studio-hero-box.box-black {
   grid-column: 1 / span 4;
-  background: #000;
+  background: var(--bg-color);
 }
 
 .studio-hero-box:nth-child(2) {
@@ -1181,8 +1176,8 @@ ul {
   left: 0;
   width: 100%;
   height: 100vh;
-  background: #000;
-  color: #fff;
+  background: var(--bg-color);
+  color: var(--text-color);
   z-index: 999;
   clip-path: circle(0% at 100% 0%);
   /* Starts at top-right corner */
@@ -1473,6 +1468,20 @@ ul {
     flex-direction: column;
   }
 
+  .story_image_wrapper {
+    width: 100vw;
+    margin-left: calc(-1 * var(--container-padding));
+    margin-right: calc(-1 * var(--container-padding));
+    margin-bottom: 0;
+  }
+
+  .story_image_wrapper img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+
   .story_label {
     margin-top: 40px;
     padding-left: 0;
@@ -1552,7 +1561,7 @@ ul {
     bottom: 0;
     left: 0;
     width: 100%;
-    background: #000;
+    background: var(--bg-color);
   }
 
   .project-name {
@@ -1616,6 +1625,12 @@ ul {
   gap: 40px;
 }
 
+/* Footer */
+.dhk-footer {
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
 /* Custom Cursor Logic for Studio Section */
 .hover-trigger-studio {
   cursor: none !important;
@@ -1631,7 +1646,7 @@ ul {
   left: 0;
   font-size: 14px;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-color);
   pointer-events: none;
   z-index: 10000;
   opacity: 0;
