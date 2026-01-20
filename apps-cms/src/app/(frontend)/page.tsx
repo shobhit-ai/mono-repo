@@ -659,7 +659,7 @@ const HomePage = () => {
 
         if (reveal) {
           gsap.to(reveal, {
-            height: "5%",
+            height: "6%",
             duration: 0.5,
             ease: "power3.out",
           });
