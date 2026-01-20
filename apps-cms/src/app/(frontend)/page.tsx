@@ -360,7 +360,6 @@ const HomePage = () => {
       );
     });
 
-
     const imageWrappers = document.querySelectorAll('.story_image_wrapper');
     imageWrappers.forEach((wrapper) => {
       const img = wrapper.querySelector('img');
@@ -660,7 +659,7 @@ const HomePage = () => {
 
         if (reveal) {
           gsap.to(reveal, {
-            height: "12%",
+            height: "5%",
             duration: 0.5,
             ease: "power3.out",
           });
