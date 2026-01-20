@@ -513,10 +513,10 @@ const HomePage = () => {
       if (!card) return;
 
       const desc = card.querySelector(".blog-desc");
-      const overlay = card.querySelector(".view-article");
+      const overlay = card.querySelector(".view-article") as HTMLElement;
 
       if (desc) gsap.set(desc, { height: 0, opacity: 0, marginTop: 0, overflow: 'hidden' });
-      if (overlay) gsap.set(overlay, { opacity: 0, y: 20 });
+      if (overlay) gsap.set(overlay, { opacity: 0, left: 0, top: 0 });
 
       const onMouseEnter = () => {
         gsap.to(desc, {
@@ -529,9 +529,23 @@ const HomePage = () => {
 
         gsap.to(overlay, {
           opacity: 1,
-          y: 0,
           duration: 0.5,
           ease: "power3.out",
+        });
+      };
+
+      const onMouseMove = (e: MouseEvent) => {
+        if (!overlay) return;
+
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        gsap.to(overlay, {
+          left: x,
+          top: y,
+          duration: 0.15,
+          ease: "power2.out",
         });
       };
 
@@ -546,16 +560,20 @@ const HomePage = () => {
 
         gsap.to(overlay, {
           opacity: 0,
-          y: 20,
+          left: 0,
+          top: 0,
           duration: 0.4,
           ease: "power3.out",
         });
       };
+
       card.addEventListener("mouseenter", onMouseEnter);
+      card.addEventListener("mousemove", onMouseMove);
       card.addEventListener("mouseleave", onMouseLeave);
 
       (card as any)._cleanup = () => {
         card.removeEventListener("mouseenter", onMouseEnter);
+        card.removeEventListener("mousemove", onMouseMove);
         card.removeEventListener("mouseleave", onMouseLeave);
       };
     });
