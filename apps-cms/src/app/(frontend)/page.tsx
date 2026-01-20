@@ -565,49 +565,6 @@ const HomePage = () => {
     };
   }, [journalItems]);
 
-  // useEffect(() => {
-  //   projectRefs.current.forEach((card) => {
-  //     if (!card) return;
-
-  //     const reveal = card.querySelector(".bottom-reveal");
-  //     const name = card.querySelector(".project-name");
-
-  //     gsap.set(name, { opacity: 0, y: 20 });
-
-  //     card.addEventListener("mouseenter", () => {
-  //       gsap.to(reveal, {
-  //         height: "5%",
-  //         duration: 0.5,
-  //         ease: "power3.out",
-  //       });
-
-  //       gsap.to(name, {
-  //         opacity: 1,
-  //         y: 0,
-  //         duration: 0.5,
-  //         delay: 0.2,
-  //         ease: "power3.out",
-  //       });
-  //     });
-
-  //     card.addEventListener("mouseleave", () => {
-  //       gsap.to(reveal, {
-  //         height: "0%",
-  //         duration: 0.5,
-  //         ease: "power3.out",
-  //       });
-
-  //       gsap.to(name, {
-  //         opacity: 0,
-  //         y: 20,
-  //         duration: 0.4,
-  //         ease: "power3.out",
-  //       });
-  //     });
-  //   });
-  // }, []);
-
-
   useEffect(() => {
     projectRefs.current.forEach((card) => {
       if (!card) return;
@@ -671,97 +628,96 @@ const HomePage = () => {
   }, []);
 
 
-useEffect(() => {
+  useEffect(() => {
 
-  const cards = [...footerRefs.current, ...heroRefs.current];
-  const handlersMap = new WeakMap<HTMLDivElement, any>();
+    const cards = [...footerRefs.current, ...heroRefs.current];
+    const handlersMap = new WeakMap<HTMLDivElement, any>();
 
-  cards.forEach((card) => {
-    if (!card) return;
-
-    const viewText = card.querySelector(".view-project-text") as HTMLElement | null;
-    const reveal = card.querySelector(".bottom-reveal") as HTMLElement | null;
-
-    if (viewText) {
-      gsap.set(viewText, { opacity: 0, x: 0, y: 0 });
-    }
-
-    if (reveal) {
-      gsap.set(reveal, { height: "0%" });
-    }
-
-    const handleEnter = () => {
-      cards.forEach((c) => {
-        const t = c?.querySelector(".view-project-text");
-        if (t) gsap.to(t, { opacity: 0, duration: 0.1 });
-      });
-
-      if (viewText) {
-        gsap.to(viewText, { opacity: 1, duration: 0.2 });
-      }
-
-      if (reveal) {
-        gsap.to(reveal, {
-          height: "12%",
-          duration: 0.5,
-          ease: "power3.out",
-        });
-      }
-    };
-
-    const handleMove = (e: MouseEvent) => {
-      if (!viewText) return;
-
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      gsap.to(viewText, {
-        x: x + 10,
-        y: y + 10,
-        duration: 0.1,
-        ease: "power2.out",
-      });
-    };
-
-    const handleLeave = () => {
-      if (viewText) {
-        gsap.to(viewText, { opacity: 0, duration: 0.2 });
-      }
-
-      if (reveal) {
-        gsap.to(reveal, {
-          height: "0%",
-          duration: 0.5,
-          ease: "power3.out",
-        });
-      }
-    };
-
-    card.addEventListener("mouseenter", handleEnter);
-    card.addEventListener("mousemove", handleMove);
-    card.addEventListener("mouseleave", handleLeave);
-
-    // Store handlers in WeakMap (TypeScript safe)
-    handlersMap.set(card, { handleEnter, handleMove, handleLeave });
-  });
-
-  return () => {
     cards.forEach((card) => {
       if (!card) return;
 
-      const handlers = handlersMap.get(card);
-      if (!handlers) return;
+      const viewText = card.querySelector(".view-project-text") as HTMLElement | null;
+      const reveal = card.querySelector(".bottom-reveal") as HTMLElement | null;
 
-      const { handleEnter, handleMove, handleLeave } = handlers;
+      if (viewText) {
+        gsap.set(viewText, { opacity: 0, x: 0, y: 0 });
+      }
 
-      card.removeEventListener("mouseenter", handleEnter);
-      card.removeEventListener("mousemove", handleMove);
-      card.removeEventListener("mouseleave", handleLeave);
+      if (reveal) {
+        gsap.set(reveal, { height: "0%" });
+      }
+
+      const handleEnter = () => {
+        cards.forEach((c) => {
+          const t = c?.querySelector(".view-project-text");
+          if (t) gsap.to(t, { opacity: 0, duration: 0.1 });
+        });
+
+        if (viewText) {
+          gsap.to(viewText, { opacity: 1, duration: 0.2 });
+        }
+
+        if (reveal) {
+          gsap.to(reveal, {
+            height: "12%",
+            duration: 0.5,
+            ease: "power3.out",
+          });
+        }
+      };
+
+      const handleMove = (e: MouseEvent) => {
+        if (!viewText) return;
+
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        gsap.to(viewText, {
+          x: x + 10,
+          y: y + 10,
+          duration: 0.1,
+          ease: "power2.out",
+        });
+      };
+
+      const handleLeave = () => {
+        if (viewText) {
+          gsap.to(viewText, { opacity: 0, duration: 0.2 });
+        }
+
+        if (reveal) {
+          gsap.to(reveal, {
+            height: "0%",
+            duration: 0.5,
+            ease: "power3.out",
+          });
+        }
+      };
+
+      card.addEventListener("mouseenter", handleEnter);
+      card.addEventListener("mousemove", handleMove);
+      card.addEventListener("mouseleave", handleLeave);
+
+      handlersMap.set(card, { handleEnter, handleMove, handleLeave });
     });
-  };
 
-}, []);
+    return () => {
+      cards.forEach((card) => {
+        if (!card) return;
+
+        const handlers = handlersMap.get(card);
+        if (!handlers) return;
+
+        const { handleEnter, handleMove, handleLeave } = handlers;
+
+        card.removeEventListener("mouseenter", handleEnter);
+        card.removeEventListener("mousemove", handleMove);
+        card.removeEventListener("mouseleave", handleLeave);
+      });
+    };
+
+  }, []);
 
 
 
@@ -1029,8 +985,6 @@ useEffect(() => {
             >
               <img src={project.img} alt={project.title} className="w-full h-full object-cover" />
 
-              <div className="view-project-text">[ view project ]</div>
-
               <div className="bottom-reveal">
                 <div className="flex justify-between items-center w-full px-5 py-3">
                   <span className="text-white text-sm md:text-base font-bold">
@@ -1061,7 +1015,6 @@ useEffect(() => {
               }}
             >
               <img src={item.img} alt={item.alt} className="w-full h-full object-cover" />
-              <div className="view-project-text">[ view project ]</div>
               <div className="bottom-reveal">
                 <span className="text-white text-sm md:text-base font-bold px-5 py-3">
                   {item.alt}

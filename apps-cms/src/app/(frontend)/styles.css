@@ -502,6 +502,7 @@ ul {
   z-index: 9999;
   white-space: nowrap;
 }
+
 .studio-item {
   position: relative;
   cursor: pointer !important;
@@ -1564,9 +1565,9 @@ ul {
 }
 
 /* Custom Cursor Logic for Studio Section */
-/* .hover-trigger-studio {
+.hover-trigger-studio {
   cursor: none !important;
-} */
+}
 
 /* .hover-trigger-studio {
   cursor: pointer;
@@ -1584,7 +1585,9 @@ ul {
   opacity: 0;
   transform: translate(-50%, -50%) scale(0);
   white-space: nowrap;
-  mix-blend-mode: difference;
+  /* mix-blend-mode: difference; Removed per user request to have white color */
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+  /* Optional: add shadow for visibility if needed, or just keep clear white */
   display: flex;
   justify-content: center;
   align-items: center;
