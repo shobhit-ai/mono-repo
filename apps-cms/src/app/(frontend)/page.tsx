@@ -565,6 +565,7 @@ const HomePage = () => {
     };
   }, [journalItems]);
 
+
   useEffect(() => {
     projectRefs.current.forEach((card) => {
       if (!card) return;
@@ -718,7 +719,6 @@ const HomePage = () => {
     };
 
   }, []);
-
 
 
   useEffect(() => {
@@ -1078,7 +1078,6 @@ const HomePage = () => {
           <button className="load-more-btn">[ load more ]</button>
         </div>
       </section>
-
       <section id="journal" className="container">
         <div className="section-title-large reveal-on-scroll">journal</div>
         <div className="journal-grid">

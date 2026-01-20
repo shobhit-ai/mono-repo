@@ -929,12 +929,12 @@ ul {
 .journal-card.active .journal-view-article {
   opacity: 1;
   cursor: pointer;
-}
+} 
 
-.journal-image-wrapper:hover .journal-view-article {
+ .journal-image-wrapper:hover .journal-view-article {
   opacity: 1;
   cursor: pointer;
-}
+} 
 
 .journal-text {
   display: block;
@@ -1013,9 +1013,9 @@ ul {
   line-height: 1.6;
 }
 
-.journal-card:hover .journal-view-article {
+ /* .journal-card:hover .journal-view-article {
   opacity: 1;
-}
+}  */
 
 /* Footer */
 /* Footer - Matches dhk.co.za high-end minimalist design */
