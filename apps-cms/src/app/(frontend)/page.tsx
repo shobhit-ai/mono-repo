@@ -786,23 +786,23 @@ const HomePage = () => {
         <div className="menu-container h-full flex flex-col justify-between py-8 md:py-12">
           <div className="flex flex-col justify-center flex-grow">
             <nav className="menu-nav flex flex-col gap-2">
-              <a href="/" onClick={toggleMenu} className="menu-nav-link">home</a>
-              <a href="#projects" onClick={toggleMenu} className="menu-nav-link">projects</a>
-              <a href="#studio" onClick={toggleMenu} className="menu-nav-link">studio</a>
+              <a href="/" onClick={toggleMenu} className="menu-nav-link">home,</a>
+              <a href="#projects" onClick={toggleMenu} className="menu-nav-link">projects,</a>
+              <a href="#studio" onClick={toggleMenu} className="menu-nav-link">studio,</a>
 
               <a href="#journal" onClick={toggleMenu} className="menu-nav-link mt-6">
                 journal
               </a>
               <a
                 href="#"
-                className="pl-2 mt-2 text-xl md:text-2xl font-bold lowercase text-white hover:opacity-60 transition-opacity"
+                className="pl-2 mt-6 text-xl md:text-2xl font-bold lowercase text-white hover:opacity-60 transition-opacity"
               >
                 [ contact us ]
               </a>
             </nav>
           </div>
           <div className="menu-footer w-full mt-auto">
-            <div className="flex justify-between items-center w-full mb-4">
+            <div className="flex justify-between items-center w-full">
               <a
                 href="#careers"
                 onClick={toggleMenu}
