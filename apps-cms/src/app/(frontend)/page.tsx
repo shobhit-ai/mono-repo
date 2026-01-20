@@ -65,6 +65,10 @@ const HomePage = () => {
     [
       'https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/6913013db3ed936bd259f69e_01---H0_HERO_2of9.jpg',
       'https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/6913015d65650b87232a69a3_01---H0_HERO_5of9.jpg'
+    ],
+    [
+      'https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/691300f826c9e59084f1de99_01---H0_HERO_1of9.jpg',
+      'https://cdn.prod.website-files.com/6746d4e7508fcde5d1dbac6c/6913011d3d3a260559af0846_01---H0_HERO_4of9.jpg'
     ]
   ];
 
@@ -146,6 +150,7 @@ const HomePage = () => {
       name: "Radisson Red",
       image: "https://cdn.prod.website-files.com/67483fb596664fd411a9d07f/67b208fda748d932f1e7b465_radisson.avif",
       location: "V&A Waterfront, Cape Town",
+      year: "2022"
     }
   ];
 
@@ -755,15 +760,7 @@ const HomePage = () => {
     }
   }, [windowWidth]);
 
-  const getColumnVisibility = (colIndex: number) => {
-    if (windowWidth < 640) {
-      return colIndex === 0 ? '' : 'hidden';
-    } else if (windowWidth < 1024) {
-      return colIndex === 1 ? 'hidden' : '';
-    } else {
-      return '';
-    }
-  };
+
 
   return (
     <div className="dhk-website">
@@ -815,6 +812,7 @@ const HomePage = () => {
       </button>
 
       <div className="home-intro-wrapper w-full relative">
+
         <section
           className="hero-section relative w-full overflow-hidden bg-black text-white"
           style={{ height: 'calc(80vh - 80px)' }}
@@ -828,11 +826,11 @@ const HomePage = () => {
             </div>
           )}
 
-          <div className="absolute inset-0 z-0 grid grid-cols-1 md:grid-cols-3 w-full h-full gap-0">
+          <div className="absolute inset-0 z-0 grid grid-cols-2 md:grid-cols-3 w-full h-full gap-0">
             {heroColumns.map((colImages, colIndex) => (
               <div
                 key={colIndex}
-                className={`col-${colIndex} relative w-full h-full overflow-hidden ${getColumnVisibility(colIndex)}`}
+                className={`col-${colIndex} relative w-full h-full overflow-hidden ${colIndex === 3 ? 'block md:hidden' : 'block'}`}
               >
                 {colImages.map((src, imgIndex) => (
                   <div
@@ -962,15 +960,19 @@ const HomePage = () => {
 
             <div className="view-project-text">[ view project ]</div>
 
-            <div className="bottom-reveal">
-              <h3 className="project-name" style={{ paddingLeft: "20px" }}>
-                {project.name}
-              </h3>
+            <div className="bottom-reveal mobile-visible">
+              <div className="flex justify-between items-center w-full px-5 py-3">
+                <h3 className="project-name text-white text-sm md:text-base font-bold m-0 p-0">
+                  {project.name}
+                </h3>
+                <span className="text-white text-sm md:text-base font-bold">
+                  {project.year}
+                </span>
+              </div>
             </div>
           </div>
         ))}
       </section>
-
 
       <section id="studio" className="relative">
         <div className="projects-footer-grid">
@@ -984,7 +986,7 @@ const HomePage = () => {
             >
               <img src={project.img} alt={project.title} className="w-full h-full object-cover" />
 
-              <div className="bottom-reveal">
+              <div className="bottom-reveal mobile-visible">
                 <div className="flex justify-between items-center w-full px-5 py-3">
                   <span className="text-white text-sm md:text-base font-bold">
                     {project.title}
@@ -1014,7 +1016,7 @@ const HomePage = () => {
               }}
             >
               <img src={item.img} alt={item.alt} className="w-full h-full object-cover" />
-              <div className="bottom-reveal">
+              <div className="bottom-reveal mobile-visible">
                 <span className="text-white text-sm md:text-base font-bold px-5 py-3">
                   {item.alt}
                 </span>

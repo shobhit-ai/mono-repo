@@ -929,12 +929,12 @@ ul {
 .journal-card.active .journal-view-article {
   opacity: 1;
   cursor: pointer;
-} 
+}
 
- .journal-image-wrapper:hover .journal-view-article {
+.journal-image-wrapper:hover .journal-view-article {
   opacity: 1;
   cursor: pointer;
-} 
+}
 
 .journal-text {
   display: block;
@@ -1013,13 +1013,13 @@ ul {
   line-height: 1.6;
 }
 
- /* .journal-card:hover .journal-view-article {
+/* .journal-card:hover .journal-view-article {
   opacity: 1;
 }  */
 
 /* Footer */
 /* Footer - Matches dhk.co.za high-end minimalist design */
-.dhk-footer {
+/* .dhk-footer {
   background: var(--bg-color);
   padding: 200px var(--container-padding) 40px;
   border-top: none;
@@ -1027,17 +1027,17 @@ ul {
   font-size: 16px;
   font-weight: 700;
   -webkit-font-smoothing: antialiased;
-}
+} */
 
-.footer-grid {
+/* .footer-grid {
   display: grid;
   grid-template-columns: 1fr auto auto auto auto;
   gap: 80px;
   align-items: flex-end;
-}
+} */
 
 /* Far left: Copyright and Legal */
-.footer-col.legal-info {
+/* .footer-col.legal-info {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -1045,7 +1045,7 @@ ul {
   font-weight: 700;
   text-transform: lowercase;
   line-height: 1.4;
-}
+} */
 
 .legal-link {
   font-size: 16px;
@@ -1418,36 +1418,58 @@ ul {
     border-right: none;
   }
 
+  .we_section {
+    padding-top: 60px;
+    height: auto;
+    min-height: auto;
+  }
+
   .we_layout-top {
     display: flex;
     flex-direction: column;
-    top: 15vh;
+    position: relative;
+    top: 0;
+    margin-bottom: 40px;
   }
 
   .we_scroll {
+    width: 100%;
     margin-bottom: 20px;
+    position: relative;
+    top: 0;
+    transform: none !important;
+    /* Override JS scroll offset on mobile if needed */
   }
 
   .we_right {
-    width: 100%;
     grid-column: auto;
+    width: 100%;
+    padding-left: 0;
   }
 
   .we_text,
   .we_right .we_item {
-    font-size: 32px;
+    font-size: 36px;
     line-height: 1.1;
     white-space: normal;
+    background: transparent;
+  }
+
+  .we_right .we_item {
+    margin-bottom: 10px;
   }
 
   .we_layout-bottom {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
+    margin-top: 40px;
+    padding-bottom: 40px;
   }
 
   .we_left {
     margin-bottom: 10px;
+    width: 100%;
   }
 
   .story_grid {
@@ -1496,22 +1518,49 @@ ul {
     right: 20px;
   }
 
-  .footer-project-box {
-    height: 50vh;
+  .projects-footer-grid,
+  .studio-hero-grid {
+    display: flex;
+    flex-direction: column;
+    height: auto;
     width: 100%;
   }
 
-  .studio-hero-grid {
-    grid-template-columns: 1fr;
-    height: auto;
+  .footer-project-box,
+  .studio-hero-box {
+    width: 100%;
+    height: 50vh;
+    grid-column: auto !important;
+    /* Safety */
   }
 
-  .studio-hero-box {
-    height: 50vh;
+  .box-1,
+  .box-2 {
+    grid-column: auto !important;
+    width: 100%;
+  }
+
+  .box-3 {
+    display: none;
   }
 
   .box-black {
     display: none;
+  }
+
+  /* Make reveal visible on mobile */
+  .mobile-visible {
+    height: auto !important;
+    opacity: 1 !important;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #000;
+  }
+
+  .project-name {
+    margin: 0;
   }
 
   .awards-section {
