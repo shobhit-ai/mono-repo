@@ -30,6 +30,9 @@ const HomePage = () => {
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
   const studioRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const footerRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const heroRefs = useRef<(HTMLDivElement | null)[]>([]);
+
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -562,16 +565,63 @@ const HomePage = () => {
     };
   }, [journalItems]);
 
+  // useEffect(() => {
+  //   projectRefs.current.forEach((card) => {
+  //     if (!card) return;
+
+  //     const reveal = card.querySelector(".bottom-reveal");
+  //     const name = card.querySelector(".project-name");
+
+  //     gsap.set(name, { opacity: 0, y: 20 });
+
+  //     card.addEventListener("mouseenter", () => {
+  //       gsap.to(reveal, {
+  //         height: "5%",
+  //         duration: 0.5,
+  //         ease: "power3.out",
+  //       });
+
+  //       gsap.to(name, {
+  //         opacity: 1,
+  //         y: 0,
+  //         duration: 0.5,
+  //         delay: 0.2,
+  //         ease: "power3.out",
+  //       });
+  //     });
+
+  //     card.addEventListener("mouseleave", () => {
+  //       gsap.to(reveal, {
+  //         height: "0%",
+  //         duration: 0.5,
+  //         ease: "power3.out",
+  //       });
+
+  //       gsap.to(name, {
+  //         opacity: 0,
+  //         y: 20,
+  //         duration: 0.4,
+  //         ease: "power3.out",
+  //       });
+  //     });
+  //   });
+  // }, []);
+
+
   useEffect(() => {
     projectRefs.current.forEach((card) => {
       if (!card) return;
 
       const reveal = card.querySelector(".bottom-reveal");
       const name = card.querySelector(".project-name");
+      const viewText = card.querySelector(".view-project-text");
 
       gsap.set(name, { opacity: 0, y: 20 });
+      gsap.set(viewText, { opacity: 0 });
 
       card.addEventListener("mouseenter", () => {
+        gsap.to(viewText, { opacity: 1, duration: 0.2 });
+
         gsap.to(reveal, {
           height: "5%",
           duration: 0.5,
@@ -587,7 +637,23 @@ const HomePage = () => {
         });
       });
 
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        gsap.to(viewText, {
+          x: x + 10,
+          y: y + 10,
+          duration: 0.1,
+          ease: "power2.out",
+        });
+      });
+
       card.addEventListener("mouseleave", () => {
+        gsap.to(viewText, { opacity: 0, duration: 0.2 });
+
         gsap.to(reveal, {
           height: "0%",
           duration: 0.5,
@@ -604,45 +670,100 @@ const HomePage = () => {
     });
   }, []);
 
-  useEffect(() => {
-    studioRefs.current.forEach((card) => {
+
+useEffect(() => {
+
+  const cards = [...footerRefs.current, ...heroRefs.current];
+  const handlersMap = new WeakMap<HTMLDivElement, any>();
+
+  cards.forEach((card) => {
+    if (!card) return;
+
+    const viewText = card.querySelector(".view-project-text") as HTMLElement | null;
+    const reveal = card.querySelector(".bottom-reveal") as HTMLElement | null;
+
+    if (viewText) {
+      gsap.set(viewText, { opacity: 0, x: 0, y: 0 });
+    }
+
+    if (reveal) {
+      gsap.set(reveal, { height: "0%" });
+    }
+
+    const handleEnter = () => {
+      cards.forEach((c) => {
+        const t = c?.querySelector(".view-project-text");
+        if (t) gsap.to(t, { opacity: 0, duration: 0.1 });
+      });
+
+      if (viewText) {
+        gsap.to(viewText, { opacity: 1, duration: 0.2 });
+      }
+
+      if (reveal) {
+        gsap.to(reveal, {
+          height: "12%",
+          duration: 0.5,
+          ease: "power3.out",
+        });
+      }
+    };
+
+    const handleMove = (e: MouseEvent) => {
+      if (!viewText) return;
+
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      gsap.to(viewText, {
+        x: x + 10,
+        y: y + 10,
+        duration: 0.1,
+        ease: "power2.out",
+      });
+    };
+
+    const handleLeave = () => {
+      if (viewText) {
+        gsap.to(viewText, { opacity: 0, duration: 0.2 });
+      }
+
+      if (reveal) {
+        gsap.to(reveal, {
+          height: "0%",
+          duration: 0.5,
+          ease: "power3.out",
+        });
+      }
+    };
+
+    card.addEventListener("mouseenter", handleEnter);
+    card.addEventListener("mousemove", handleMove);
+    card.addEventListener("mouseleave", handleLeave);
+
+    // Store handlers in WeakMap (TypeScript safe)
+    handlersMap.set(card, { handleEnter, handleMove, handleLeave });
+  });
+
+  return () => {
+    cards.forEach((card) => {
       if (!card) return;
 
-      const reveal = card.querySelector(".bottom-reveal");
-      const name = card.querySelector(".project-name");
-      gsap.set(name, { opacity: 0, y: 20 });
-      card.addEventListener("mouseenter", () => {
-        gsap.to(reveal, {
-          height: "5%",
-          duration: 0.5,
-          ease: "power3.out",
-        });
+      const handlers = handlersMap.get(card);
+      if (!handlers) return;
 
-        gsap.to(name, {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          delay: 0.2,
-          ease: "power3.out",
-        });
-      });
+      const { handleEnter, handleMove, handleLeave } = handlers;
 
-      card.addEventListener("mouseleave", () => {
-        gsap.to(reveal, {
-          height: "0%",
-          duration: 0.5,
-          ease: "power3.out",
-        });
-
-        gsap.to(name, {
-          opacity: 0,
-          y: 20,
-          duration: 0.4,
-          ease: "power3.out",
-        });
-      });
+      card.removeEventListener("mouseenter", handleEnter);
+      card.removeEventListener("mousemove", handleMove);
+      card.removeEventListener("mouseleave", handleLeave);
     });
-  }, []);
+  };
+
+}, []);
+
+
 
   useEffect(() => {
     const cursorLabel = document.querySelector('.cursor-view-project-label');
@@ -865,20 +986,36 @@ const HomePage = () => {
 
       <section id="projects" className="featured-projects">
         <div className="projects-title-grid">
-          <div className="featured-projects-title reveal-on-scroll">featured projects</div>
+          <div className="featured-projects-title reveal-on-scroll">
+            featured projects
+          </div>
         </div>
+
         {featuredProjects.map((project, idx) => (
-          <div key={idx} className="featured-project-item hover-trigger-studio" ref={(el) => {
-            projectRefs.current[idx] = el;
-          }}
+          <div
+            key={idx}
+            className="featured-project-item"
+            ref={(el) => {
+              projectRefs.current[idx] = el;
+            }}
           >
-            <img src={project.image} alt={project.name} className="w-full h-full object-cover" />
+            <img
+              src={project.image}
+              alt={project.name}
+              className="w-full h-full object-cover"
+            />
+
+            <div className="view-project-text">[ view project ]</div>
+
             <div className="bottom-reveal">
-              <h3 className="project-name" style={{ paddingLeft: "20px" }}>{project.name}</h3>
+              <h3 className="project-name" style={{ paddingLeft: "20px" }}>
+                {project.name}
+              </h3>
             </div>
           </div>
         ))}
       </section>
+
 
       <section id="studio" className="relative">
         <div className="projects-footer-grid">
@@ -887,20 +1024,26 @@ const HomePage = () => {
               key={index}
               className={`footer-project-box box-${index + 1} reveal-on-scroll hover-trigger-studio`}
               ref={(el) => {
-                studioRefs.current[index] = el;
+                footerRefs.current[index] = el;
               }}
             >
               <img src={project.img} alt={project.title} className="w-full h-full object-cover" />
+
+              <div className="view-project-text">[ view project ]</div>
+
               <div className="bottom-reveal">
                 <div className="flex justify-between items-center w-full px-5 py-3">
-                  <span className="text-white text-sm md:text-base font-bold">{project.title}</span>
-                  <span className="text-white text-sm md:text-base font-bold">{project.year}</span>
+                  <span className="text-white text-sm md:text-base font-bold">
+                    {project.title}
+                  </span>
+                  <span className="text-white text-sm md:text-base font-bold">
+                    {project.year}
+                  </span>
                 </div>
               </div>
             </div>
           ))}
-
-          <div className="footer-project-box box-3 reveal-on-scroll">
+          <div className="footer-project-box box-3">
             <a href="#projects" className="view-all-projects">
               [&nbsp;&nbsp;&nbsp;view all projects&nbsp;&nbsp;&nbsp;]
             </a>
@@ -914,12 +1057,15 @@ const HomePage = () => {
               key={index}
               className="studio-hero-box reveal-on-scroll hover-trigger-studio"
               ref={(el) => {
-                studioRefs.current[index + footerProjects.length] = el;
+                heroRefs.current[index] = el;
               }}
             >
               <img src={item.img} alt={item.alt} className="w-full h-full object-cover" />
+              <div className="view-project-text">[ view project ]</div>
               <div className="bottom-reveal">
-                <span className="text-white text-sm md:text-base font-bold px-5 py-3">{item.alt}</span>
+                <span className="text-white text-sm md:text-base font-bold px-5 py-3">
+                  {item.alt}
+                </span>
               </div>
             </div>
           ))}

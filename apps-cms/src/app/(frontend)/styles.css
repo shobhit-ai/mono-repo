@@ -479,7 +479,32 @@ ul {
 }
 
 .featured-project-item {
+  position: relative !important;
+  cursor: pointer !important;
+}
+
+.footer-project-box,
+.studio-hero-box {
   position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.view-project-text {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  color: #ffffff !important;
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0;
+  z-index: 9999;
+  white-space: nowrap;
+}
+.studio-item {
+  position: relative;
+  cursor: pointer !important;
 }
 
 .project-view-overlay {
@@ -876,6 +901,10 @@ ul {
 .bottom-reveal {
   background-color: #000000;
   color: #fff;
+}
+
+.featured-project-item:hover .view-project-text {
+  opacity: 1 !important;
 }
 
 .journal-view-article {
@@ -1455,6 +1484,7 @@ ul {
   .project-year {
     text-align: right;
   }
+
   .featured-project-item img {
     height: 50vh;
   }
@@ -1534,9 +1564,13 @@ ul {
 }
 
 /* Custom Cursor Logic for Studio Section */
-.hover-trigger-studio {
+/* .hover-trigger-studio {
   cursor: none !important;
-}
+} */
+
+/* .hover-trigger-studio {
+  cursor: pointer;
+} */
 
 .cursor-view-project-label {
   position: fixed;
