@@ -760,59 +760,57 @@ const HomePage = () => {
     }
   }, [windowWidth]);
 
-
-
   return (
     <div className="dhk-website">
       <div className="full-screen-menu" ref={menuRef}>
-        <div className="menu-container">
-          <nav className="menu-nav">
-            <a href="#projects" onClick={toggleMenu} className="menu-nav-link"><span>01</span> projects</a>
-            <a href="#studio" onClick={toggleMenu} className="menu-nav-link"><span>02</span> studio</a>
-            <a href="#journal" onClick={toggleMenu} className="menu-nav-link"><span>03</span> journal</a>
-            <a href="#careers" onClick={toggleMenu} className="menu-nav-link"><span>04</span> careers ↗</a>
-          </nav>
-
-          <div className="menu-footer">
-            <div className="menu-footer-col">
-              <h4>social</h4>
-              <a href="#">instagram</a>
-              <a href="#">linkedin</a>
+        <button className="absolute top-6 right-6 text-white font-bold text-lg md:hidden z-50" onClick={toggleMenu}>close</button>
+        <div className="menu-container h-full flex flex-col justify-between py-8 md:py-12">
+          <div className="flex flex-col justify-center flex-grow">
+            <nav className="menu-nav mb-8 md:mb-12">
+              <a href="/" onClick={toggleMenu} className="menu-nav-link">home</a>
+              <a href="#projects" onClick={toggleMenu} className="menu-nav-link">projects</a>
+              <a href="#studio" onClick={toggleMenu} className="menu-nav-link">studio</a>
+              <a href="#journal" onClick={toggleMenu} className="menu-nav-link">journal</a>
+            </nav>
+            <div className="pl-2 mt-10">
+              <a href="#" className="text-xl md:text-2xl font-bold lowercase text-white hover:opacity-60 transition-opacity">[ contact us ]</a>
             </div>
-            <div className="menu-footer-col">
-              <h4>contact</h4>
-              <a href="#">cape town</a>
-              <a href="#">johannesburg</a>
+          </div>
+
+          <div className="menu-footer grid grid-cols-2 gap-8 w-full mt-auto">
+            <div className="menu-footer-col flex flex-col gap-4 items-start">
+              <a href="#careers" onClick={toggleMenu} className="text-sm md:text-base font-bold lowercase hover:opacity-60 mb-4">careers ↗</a>
+
+              <div className="flex flex-col gap-3 w-full max-w-[200px]">
+                <h4 className="text-sm font-bold lowercase opacity-100 mb-0">newsletter</h4>
+                <input
+                  type="text"
+                  placeholder="full name"
+                  className="w-full bg-transparent border-b border-white/20 pb-2 text-white text-sm font-bold lowercase outline-none focus:border-white/50 placeholder:text-white/30"
+                />
+                <input
+                  type="email"
+                  placeholder="email address"
+                  className="w-full bg-transparent border-b border-white/20 pb-2 text-white text-sm font-bold lowercase outline-none focus:border-white/50 placeholder:text-white/30"
+                />
+                <button className="text-left text-sm font-bold lowercase hover:opacity-60 mt-1">
+                  [ subscribe ]
+                </button>
+              </div>
+            </div>
+
+            <div className="menu-footer-col flex flex-col gap-1 items-end text-right">
+              <a href="#" className="text-sm md:text-base font-bold lowercase hover:opacity-60">instagram</a>
+              <a href="#" className="text-sm md:text-base font-bold lowercase hover:opacity-60">linkedin</a>
+              <a href="#" className="text-sm md:text-base font-bold lowercase hover:opacity-60">facebook</a>
+              <a href="#" className="text-sm md:text-base font-bold lowercase hover:opacity-60">pinterest</a>
+              <a href="#" className="text-sm md:text-base font-bold lowercase hover:opacity-60">vimeo</a>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu Button */}
-      <button
-        className="md:hidden"
-        onClick={toggleMenu}
-        style={{
-          display: isMenuOpen ? 'none' : 'block',
-          position: 'fixed',
-          bottom: '20px',
-          right: '20px',
-          background: '#000',
-          color: '#fff',
-          border: '1px solid #fff',
-          padding: '10px 20px',
-          zIndex: 100,
-          fontSize: '0.9rem',
-          fontWeight: '700',
-          textTransform: 'lowercase',
-          borderRadius: '4px'
-        }}
-      >
-        menu
-      </button>
-
       <div className="home-intro-wrapper w-full relative">
-
         <section
           className="hero-section relative w-full overflow-hidden bg-black text-white"
           style={{ height: 'calc(80vh - 80px)' }}
@@ -880,7 +878,7 @@ const HomePage = () => {
               <span className={!isDarkMode ? 'active' : ''}>light</span>
             </button>
             <button className="menu-toggle" onClick={toggleMenu}>
-              menu
+              {isMenuOpen ? 'close' : 'menu'}
             </button>
           </div>
         </header>
@@ -1047,38 +1045,55 @@ const HomePage = () => {
           )}
         </div>
         <div className="awards-list">
-          {awards.map((award, idx) => (
-            <div
-              key={idx}
-              className={`award-row reveal-on-scroll ${hoveredAwardIndex === idx ? 'active' : ''}`}
-              onMouseEnter={(e) => {
-                if (windowWidth > 768) {
-                  setHoveredAwardIndex(idx);
-                  setAwardTop(e.currentTarget.offsetTop);
-                }
-              }}
-              onMouseLeave={() => {
-                if (windowWidth > 768) setHoveredAwardIndex(null);
-              }}
-              onClick={() => {
-                if (windowWidth <= 768) {
-                  setHoveredAwardIndex(hoveredAwardIndex === idx ? null : idx);
-                }
-              }}
-            >
-              <div className="award-year">{award.year}</div>
-              <div className="award-project-info">
-                <div className="award-project">{award.project}</div>
-                {(hoveredAwardIndex === idx || windowWidth <= 768) && award.subtext && (
-                  <div className="award-subtext">{award.subtext}</div>
+          {awards.map((award, idx) => {
+            const showYear = idx === 0 || awards[idx - 1].year !== award.year;
+            const isActive = hoveredAwardIndex === idx;
+
+            return (
+              <React.Fragment key={idx}>
+                {windowWidth <= 768 && showYear && (
+                  <div className="w-full text-white font-bold text-lg mb-2 mt-8 pb-1 reveal-on-scroll">
+                    {award.year}
+                  </div>
                 )}
-              </div>
-              <div className="award-category">{award.category}</div>
-            </div>
-          ))}
-          <button className="load-more-btn">[ load more ]</button>
+                <div
+                  className={`award-row reveal-on-scroll ${isActive ? 'active' : ''}`}
+                  onMouseEnter={(e) => {
+                    if (windowWidth > 768) {
+                      setHoveredAwardIndex(idx);
+                      setAwardTop(e.currentTarget.offsetTop);
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    if (windowWidth > 768) setHoveredAwardIndex(null);
+                  }}
+                  onClick={() => {
+                    if (windowWidth <= 768) {
+                      setHoveredAwardIndex(isActive ? null : idx);
+                    }
+                  }}
+                >
+                  <div className="award-year hidden md:block">{award.year}</div>
+                  <div className="award-project-info w-full">
+                    <div className="flex justify-between items-start w-full">
+                      <div className="award-project">{award.project}</div>
+                      <div className="md:hidden pl-4 font-mono text-sm opacity-50 shrink-0">
+                        {isActive ? '[ - ]' : '[ + ]'}
+                      </div>
+                    </div>
+                    {isActive && award.subtext && (
+                      <div className="award-subtext">{award.subtext}</div>
+                    )}
+                  </div>
+                  <div className="award-category hidden md:block">{award.category}</div>
+                </div>
+              </React.Fragment>
+            );
+          })}
+          <button className="load-more-btn mt-12 md:mt-20">[ load more ]</button>
         </div>
       </section>
+
       <section id="journal" className="container">
         <div className="section-title-large reveal-on-scroll">journal</div>
         <div className="journal-grid">
@@ -1103,7 +1118,7 @@ const HomePage = () => {
         </div>
       </section>
 
-    <footer className="bg-black text-white !pl-8 !pb-6 md:!pl-16 md:!pb-8 pr-4 md:px-8 !pt-40 !md:pt-96 !mt-40 !md:mt-40">
+      <footer className="bg-black text-white !pl-8 !pb-6 md:!pl-16 md:!pb-8 pr-4 md:px-8 !pt-40 !md:pt-96 !mt-40 !md:mt-40">
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-6 items-start md:items-end">
           <div className="order-last md:order-first col-span-1 md:col-span-3 flex flex-col md:flex-row gap-4 text-sm md:text-base font-medium leading-snug items-start md:items-center opacity-50 md:opacity-100">

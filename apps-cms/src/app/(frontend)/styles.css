@@ -1208,10 +1208,11 @@ ul {
   font-weight: 800;
   line-height: 1;
   display: flex;
-  align-items: flex-start;
-  gap: 30px;
+  align-items: center;
+  gap: 20px;
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
+  text-decoration: none;
 }
 
 .menu-nav-link::before {
@@ -1231,37 +1232,28 @@ ul {
   transform: translateY(-50%) scaleX(1);
 }
 
-.menu-nav-link span {
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-top: 15px;
-  opacity: 0.3;
-  transition: opacity 0.3s ease;
-}
+/* Removed separate span styling as numbers are removed */
 
 .menu-nav-link:hover {
   opacity: 0.7;
   transform: translateX(30px);
 }
 
-.menu-nav-link:hover span {
-  opacity: 0.6;
-}
-
 .menu-footer {
-  margin-top: 80px;
+  margin-top: auto;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 40px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 40px;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  border-top: none;
+  padding-top: 20px;
+  width: 100%;
 }
 
 .menu-footer-col h4 {
   font-size: 0.8rem;
   text-transform: lowercase;
-  opacity: 0.4;
-  margin-bottom: 20px;
+  opacity: 0.7;
+  margin-bottom: 10px;
 }
 
 .menu-footer-col {
@@ -1271,7 +1263,6 @@ ul {
 }
 
 .menu-footer-col a {
-  font-size: 0.9rem;
   font-weight: 700;
   transition: opacity 0.3s ease;
 }
@@ -1283,6 +1274,11 @@ ul {
 @media (max-width: 768px) {
   .menu-nav-link {
     font-size: 3rem;
+  }
+
+  .menu-footer {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
   }
 }
 
@@ -1588,29 +1584,36 @@ ul {
   }
 
   .award-year {
-    font-size: 0.75rem;
-    opacity: 0.6;
+    display: none;
   }
 
   .award-project-info {
     font-size: 1rem;
+    width: 100%;
   }
 
+  /* award-category handled by hidden md:block in JSX, but can force hide here too */
   .award-category {
-    display: block;
-    text-align: left;
-    opacity: 0.5;
-    font-size: 0.75rem;
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  :root {
+    --container-padding: 30px;
+    --nav-height: 70px;
   }
 
-  .menu-nav-link {
-    font-size: 14vw;
-  }
+  /* ... (rest of 1024px styles if needed, or leave as is) */
+}
 
-  .menu-footer {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
+.menu-nav-link {
+  font-size: 14vw;
+}
+
+.menu-footer {
+  grid-template-columns: 1fr;
+  gap: 40px;
 }
 
 /* Custom Cursor Logic for Studio Section */
