@@ -762,27 +762,47 @@ const HomePage = () => {
 
   return (
     <div className="dhk-website">
+
       <div className="full-screen-menu" ref={menuRef}>
         <button className="absolute top-6 right-6 text-white font-bold text-lg md:hidden z-50" onClick={toggleMenu}>close</button>
         <div className="menu-container h-full flex flex-col justify-between py-8 md:py-12">
           <div className="flex flex-col justify-center flex-grow">
-            <nav className="menu-nav mb-8 md:mb-12">
+            <nav className="menu-nav flex flex-col gap-2">
               <a href="/" onClick={toggleMenu} className="menu-nav-link">home</a>
               <a href="#projects" onClick={toggleMenu} className="menu-nav-link">projects</a>
               <a href="#studio" onClick={toggleMenu} className="menu-nav-link">studio</a>
-              <a href="#journal" onClick={toggleMenu} className="menu-nav-link">journal</a>
+
+              <a href="#journal" onClick={toggleMenu} className="menu-nav-link mt-6">
+                journal
+              </a>
+              <a
+                href="#"
+                className="pl-2 mt-2 text-xl md:text-2xl font-bold lowercase text-white hover:opacity-60 transition-opacity"
+              >
+                [ contact us ]
+              </a>
             </nav>
-            <div className="pl-2 mt-10">
-              <a href="#" className="text-xl md:text-2xl font-bold lowercase text-white hover:opacity-60 transition-opacity">[ contact us ]</a>
-            </div>
           </div>
+          <div className="menu-footer w-full mt-auto">
+            <div className="flex justify-between items-center w-full mb-4">
+              <a
+                href="#careers"
+                onClick={toggleMenu}
+                className="text-sm md:text-base font-bold lowercase hover:opacity-60"
+              >
+                careers ↗
+              </a>
 
-          <div className="menu-footer grid grid-cols-2 gap-8 w-full mt-auto">
-            <div className="menu-footer-col flex flex-col gap-4 items-start">
-              <a href="#careers" onClick={toggleMenu} className="text-sm md:text-base font-bold lowercase hover:opacity-60 mb-4">careers ↗</a>
-
+              <a
+                href="#"
+                className="text-sm md:text-base font-bold lowercase hover:opacity-60"
+              >
+                instagram
+              </a>
+            </div>
+            <div className="grid grid-cols-2 gap-8 w-full">
               <div className="flex flex-col gap-3 w-full max-w-[200px]">
-                <h4 className="text-sm font-bold lowercase opacity-100 mb-0">newsletter</h4>
+                <h4 className="text-sm font-bold lowercase mb-0">newsletter</h4>
                 <input
                   type="text"
                   placeholder="full name"
@@ -797,14 +817,12 @@ const HomePage = () => {
                   [ subscribe ]
                 </button>
               </div>
-            </div>
-
-            <div className="menu-footer-col flex flex-col gap-1 items-end text-right">
-              <a href="#" className="text-sm md:text-base font-bold lowercase hover:opacity-60">instagram</a>
-              <a href="#" className="text-sm md:text-base font-bold lowercase hover:opacity-60">linkedin</a>
-              <a href="#" className="text-sm md:text-base font-bold lowercase hover:opacity-60">facebook</a>
-              <a href="#" className="text-sm md:text-base font-bold lowercase hover:opacity-60">pinterest</a>
-              <a href="#" className="text-sm md:text-base font-bold lowercase hover:opacity-60">vimeo</a>
+              <div className="flex flex-col gap-1 items-end text-right">
+                <a href="#" className="text-sm md:text-base font-bold lowercase hover:opacity-60">linkedin</a>
+                <a href="#" className="text-sm md:text-base font-bold lowercase hover:opacity-60">facebook</a>
+                <a href="#" className="text-sm md:text-base font-bold lowercase hover:opacity-60">pinterest</a>
+                <a href="#" className="text-sm md:text-base font-bold lowercase hover:opacity-60">vimeo</a>
+              </div>
             </div>
           </div>
         </div>
