@@ -22,9 +22,20 @@
         "name": "next"
       }
     ],
+    // "paths": {
+    //   "@/*": [
+    //     "./src/*"
+    //   ],
+    //   "@payload-config": [
+    //     "./src/payload.config.ts"
+    //   ]
+    // },
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@repo/ui": [
+        "../packages/ui/src"
       ],
       "@payload-config": [
         "./src/payload.config.ts"

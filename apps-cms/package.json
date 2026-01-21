@@ -36,7 +36,8 @@
     "react-dom": "19.2.3",
     "sharp": "0.34.2",
     "slate": "^0.120.0",
-    "slate-react": "^0.120.0"
+    "slate-react": "^0.120.0",
+     "@repo/ui": "workspace:*"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",
