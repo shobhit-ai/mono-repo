@@ -10,6 +10,7 @@ import { Award } from "@repo/ui";
 import { Jurnal } from '@repo/ui';
 import { Projects } from "@repo/ui";
 import { Section } from "@repo/ui";
+import { TopBanner } from "@repo/ui";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -352,43 +353,7 @@ const HomePage = () => {
   return (
     <div className="dhk-website">
       <div className="home-intro-wrapper w-full relative">
-        <section
-          className="hero-section relative w-full overflow-hidden"
-          style={{ height: 'calc(80vh - 80px)' }}
-        >
-          {!isIntroDone && (
-            <div className="absolute top-0 left-0 w-full h-1 bg-gray-800 z-50">
-              <div
-                className="h-full bg-white transition-all duration-[8000ms] ease-linear w-full"
-                style={{ width: isIntroDone ? '100%' : '0%' }}
-              ></div>
-            </div>
-          )}
-          <div className="absolute inset-0 z-0 grid grid-cols-2 md:grid-cols-3 w-full h-full gap-0">
-            {heroColumns.map((colImages, colIndex) => (
-              <div
-                key={colIndex}
-                className={`col-${colIndex} relative w-full h-full overflow-hidden ${colIndex === 3 ? 'block md:hidden' : 'block'}`}
-              >
-                {colImages.map((src, imgIndex) => (
-                  <div
-                    key={imgIndex}
-                    className="hero-stack-image absolute inset-0 w-full h-full"
-                    style={{
-                      zIndex: colImages.length - imgIndex
-                    }}
-                  >
-                    <img
-                      src={src}
-                      alt=""
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-        </section>
+        <TopBanner />
         <Header />
       </div>
       <Section />
@@ -404,7 +369,6 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
 
 
 

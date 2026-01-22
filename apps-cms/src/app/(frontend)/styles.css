@@ -1181,7 +1181,6 @@ ul {
   color: var(--text-color);
   z-index: 999;
   clip-path: circle(0% at 100% 0%);
-  /* Starts at top-right corner */
   display: flex;
   align-items: center;
   padding: 0 var(--container-padding);

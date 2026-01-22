@@ -17,10 +17,8 @@ export const Footer = () => {
                     <div className="col-span-1 md:col-span-9 flex flex-col md:flex-row flex-wrap justify-between md:justify-end gap-8 md:gap-16 w-full">
                         <div className="w-full grid grid-cols-2 gap-x-4 gap-y-8 md:contents">
                             <div className="w-full md:w-auto flex flex-col gap-1">
-                                <a href="#" className="flex items-center text-base font-bold leading-snug lowercase transition-opacity duration-300 hover:opacity-60">
-                                    <span className="w-3 flex justify-start">
-                                        <span className="w-1.5 h-1.5 bg-white rounded-full mr-0.5"></span>
-                                    </span>
+                                <a href="#" className="flex items-center gap-3 text-base font-bold lowercase">
+                                    <span className="w-1.5 h-1.5 bg-white ml-12"></span>
                                     home
                                 </a>
                                 <a href="#projects" className="text-base font-bold leading-snug lowercase hover:opacity-60">projects</a>
@@ -63,4 +61,3 @@ export const Footer = () => {
         </>
     );
 };
-

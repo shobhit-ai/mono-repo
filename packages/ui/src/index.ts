@@ -4,4 +4,5 @@ export {Award} from ".//components/award";
 export {Jurnal} from "./components/jurnal";
 export {Projects} from "./components/projects";
 export {Section} from "./components/section";
+export {TopBanner} from "./components/topbanner";
 

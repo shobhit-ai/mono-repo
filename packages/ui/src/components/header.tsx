@@ -27,7 +27,7 @@ export const Header = () => {
         ease: 'power3.inOut',
         onStart: () => {
           menu.style.pointerEvents = 'auto';
-          menu.style.zIndex = '9999'; 
+          menu.style.zIndex = '9999';
           document.body.style.overflow = 'hidden';
         },
       });
@@ -63,8 +63,8 @@ export const Header = () => {
   return (
     <>
       <div className="full-screen-menu" ref={menuRef}>
-        <button 
-          className="absolute top-6 right-6 text-white font-bold text-lg md:hidden z-50" 
+        <button
+          className="absolute top-6 right-6 text-white font-bold text-lg md:hidden z-50"
           onClick={toggleMenu}
         >
           close
@@ -129,7 +129,9 @@ export const Header = () => {
           </div>
         </div>
       </div>
+
       
+
       {!isMenuOpen && (
         <div
           className="main-header w-full z-40 absolute bottom-0 left-0 md:sticky md:top-0"
@@ -169,6 +171,3 @@ export const Header = () => {
     </>
   );
 };
-
-
-
