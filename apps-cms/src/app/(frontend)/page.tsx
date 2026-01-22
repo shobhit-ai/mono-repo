@@ -10,7 +10,6 @@ import { Award } from "@repo/ui";
 import { Jurnal } from '@repo/ui';
 import { Projects } from "@repo/ui";
 import { Section } from "@repo/ui";
-import { TopBanner } from "@repo/ui";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -132,27 +131,51 @@ const HomePage = () => {
       const weItems = document.querySelectorAll('.we_item');
 
       if (weSection && weScroll && weItems.length > 0) {
+        // Clear all existing triggers with these IDs
         ScrollTrigger.getAll().forEach(t => {
           if ((t.vars as any).id?.startsWith('we-trigger-')) {
             t.kill();
           }
         });
 
-        const weLayoutTop = document.querySelector('.we_layout-top') as HTMLElement;
-        const weRight = document.querySelector('.we_right') as HTMLElement;
-        const totalDistance = weRight.offsetHeight - weScroll.offsetHeight;
+        // Reset transforms before recalculating
+        gsap.set(weScroll, { clearProps: "transform" });
 
+        const isMobile = window.innerWidth <= 768;
+        const weRight = document.querySelector('.we_right') as HTMLElement;
+        const totalDistance = isMobile ? 80 : (weRight.offsetHeight - weScroll.offsetHeight);
+
+        // Main animation for the "we" text
         gsap.to(weScroll, {
           y: totalDistance,
+          x: isMobile ? 0 : 0, // Keep it simple but vertical
           ease: "none",
           scrollTrigger: {
             id: "we-trigger-main",
-            trigger: ".we_layout-top",
-            start: "top 85%",
-            end: "bottom 20%",
-            scrub: 2.5,
-            invalidateOnRefresh: true
+            trigger: isMobile ? weSection : ".we_layout-top",
+            start: isMobile ? "top bottom" : "top 85%",
+            end: isMobile ? "bottom top" : "bottom 20%",
+            scrub: isMobile ? 0.5 : 2.5,
+            invalidateOnRefresh: true,
           }
+        });
+
+        // Animate we_items opacity on scroll
+        weItems.forEach((item, index) => {
+          gsap.fromTo(item,
+            { opacity: 0.1 },
+            {
+              opacity: 1,
+              ease: "power2.out",
+              scrollTrigger: {
+                id: `we-trigger-item-${index}`,
+                trigger: item,
+                start: isMobile ? "top 85%" : "top 85%",
+                end: isMobile ? "top 50%" : "top 50%",
+                scrub: true,
+              }
+            }
+          );
         });
       }
     };
@@ -353,7 +376,43 @@ const HomePage = () => {
   return (
     <div className="dhk-website">
       <div className="home-intro-wrapper w-full relative">
-        <TopBanner />
+        <section
+          className="hero-section relative w-full overflow-hidden"
+          style={{ height: 'calc(80vh - 80px)' }}
+        >
+          {!isIntroDone && (
+            <div className="absolute top-0 left-0 w-full h-1 bg-gray-800 z-50">
+              <div
+                className="h-full bg-white transition-all duration-[8000ms] ease-linear w-full"
+                style={{ width: isIntroDone ? '100%' : '0%' }}
+              ></div>
+            </div>
+          )}
+          <div className="absolute inset-0 z-0 grid grid-cols-2 md:grid-cols-3 w-full h-full gap-0">
+            {heroColumns.map((colImages, colIndex) => (
+              <div
+                key={colIndex}
+                className={`col-${colIndex} relative w-full h-full overflow-hidden ${colIndex === 3 ? 'block md:hidden' : 'block'}`}
+              >
+                {colImages.map((src, imgIndex) => (
+                  <div
+                    key={imgIndex}
+                    className="hero-stack-image absolute inset-0 w-full h-full"
+                    style={{
+                      zIndex: colImages.length - imgIndex
+                    }}
+                  >
+                    <img
+                      src={src}
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
         <Header />
       </div>
       <Section />
