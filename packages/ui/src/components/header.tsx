@@ -112,7 +112,6 @@ export const Header = () => {
             >
               journal
             </a>
-
             <a
               href="#"
               className="pl-2 mt-6 text-xl md:text-2xl font-bold lowercase hover:opacity-60 transition-opacity"
