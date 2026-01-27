@@ -2,6 +2,25 @@
 
 
 
+/* Add to your global CSS */
+.perspective-container {
+  perspective: 1000px;
+}
+
+.image-card {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+/* For better overlapping */
+.left-image {
+  clip-path: polygon(0% 0%, 85% 0%, 85% 100%, 0% 100%);
+}
+
+.right-image {
+  clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 15% 100%);
+}
+
 .blog-section {
   padding: 80px 5%;
   background: white;

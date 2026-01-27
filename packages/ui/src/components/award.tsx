@@ -87,7 +87,6 @@ export const Award = () => {
         setWindowWidth(window.innerWidth);
         const handleResize = () => setWindowWidth(window.innerWidth);
         window.addEventListener('resize', handleResize);
-
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
@@ -112,7 +111,6 @@ export const Award = () => {
                             <img src={awards[hoveredAwardIndex]?.logo} alt="award logo" />
                         </div>
                     )}
-
                 </div>
                 <div className="awards-list">
                     {awards?.map((award, idx) => {
@@ -152,7 +150,7 @@ export const Award = () => {
                                             </div>
                                         </div>
                                         {isActive && award.subtext && (
-                                            <div className="award-subtext">{award.subtext}</div>
+                                            <div className="award-subtext">{award.subtext}</div> 
                                         )}
                                     </div>
                                     <div className="award-category hidden md:block">{award.category}</div>

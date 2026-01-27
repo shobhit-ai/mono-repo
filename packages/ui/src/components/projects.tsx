@@ -219,17 +219,12 @@ export const Projects = () => {
                             alt={project.name}
                             className="w-full h-full object-cover"
                         />
-
                         <div className="view-project-text">[ view project ]</div>
-
                         <div className="bottom-reveal mobile-visible">
                             <div className="flex justify-between items-center w-full px-5 py-3">
                                 <h3 className="project-name text-white text-sm md:text-base font-bold m-0 p-0">
-                                    {project.name}
+                                    {project.name}  
                                 </h3>
-                                <span className="text-white text-sm md:text-base font-bold">
-                                    {project.year}
-                                </span>
                             </div>
                         </div>
                     </div>
@@ -247,7 +242,6 @@ export const Projects = () => {
                             }}
                         >
                             <img src={project.img} alt={project.title} className="w-full h-full object-cover" />
-
                             <div className="bottom-reveal mobile-visible">
                                 <div className="flex justify-between items-center w-full px-5 py-3">
                                     <span className="text-sm md:text-base font-bold">

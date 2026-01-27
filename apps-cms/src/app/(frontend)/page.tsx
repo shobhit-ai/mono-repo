@@ -77,7 +77,7 @@ const HomePage = () => {
         pin: true,
         scrub: 0.1,
         snap: {
-          snapTo: [0, 1],
+          snapTo: [0, 1], 
           duration: { min: 0.1, max: 0.5 },
           delay: 0.05,
           ease: "power2.inOut",
