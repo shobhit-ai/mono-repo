@@ -172,7 +172,7 @@ export const Header = () => {
       </div>
 
       {!isMenuOpen && (
-        <div className="main-header fixed bottom-0 left-0 w-full z-40 md:sticky md:top-0">
+        <div className="main-header fixed bottom-0 left-0 w-full z-40 md:sticky md:top-0" data-testid="main-header">
           <div className="header-left">
             <a href="/" className="header-logo">
               <span className="home-dot" /> home

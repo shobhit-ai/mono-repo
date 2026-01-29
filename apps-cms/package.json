@@ -25,6 +25,7 @@
     "@payloadcms/richtext-lexical": "^3.70.0",
     "@payloadcms/richtext-slate": "^3.70.0",
     "@payloadcms/ui": "^3.70.0",
+    "@repo/ui": "workspace:*",
     "@studio-freight/lenis": "^1.0.42",
     "dotenv": "16.4.7",
     "graphql": "^16.8.1",
@@ -36,11 +37,9 @@
     "react-dom": "19.2.3",
     "sharp": "0.34.2",
     "slate": "^0.120.0",
-    "slate-react": "^0.120.0",
-     "@repo/ui": "workspace:*"
+    "slate-react": "^0.120.0"
   },
   "devDependencies": {
-    "@playwright/test": "1.56.1",
     "@tailwindcss/postcss": "^4.1.18",
     "@testing-library/react": "16.3.0",
     "@types/node": "^22.5.4",

@@ -77,7 +77,7 @@ const HomePage = () => {
         pin: true,
         scrub: 0.1,
         snap: {
-          snapTo: [0, 1], 
+          snapTo: [0, 1],
           duration: { min: 0.1, max: 0.5 },
           delay: 0.05,
           ease: "power2.inOut",
@@ -369,6 +369,7 @@ const HomePage = () => {
         <section
           className="hero-section relative w-full overflow-hidden"
           style={{ height: 'calc(80vh - 80px)' }}
+          data-testid="hero-section"
         >
           {!isIntroDone && (
             <div className="absolute top-0 left-0 w-full h-1 bg-gray-800 z-50">
@@ -404,7 +405,7 @@ const HomePage = () => {
           </div>
         </section>
         <Header />
-      </div>
+      </div >
       <Section />
       <Projects />
       <Award />
@@ -413,7 +414,7 @@ const HomePage = () => {
       <div className="hidden md:block cursor-view-project-label">
         [ view project ]
       </div>
-    </div>
+    </div >
   );
 };
 

@@ -13,7 +13,7 @@ export const BlogGrid = ({ blogs }: { blogs: any[] }) => {
     useLayoutEffect(() => {
         const elements = cardsRef.current.filter((el): el is HTMLDivElement => el !== null)
 
-        if (elements.length === 0) return 
+        if (elements.length === 0) return
 
         gsap.set(elements, { opacity: 0, y: 50 });
 
