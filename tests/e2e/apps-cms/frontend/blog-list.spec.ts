@@ -44,7 +44,6 @@ test.describe('Blog List Page', () => {
             .getByRole('link')
 
         await firstBlogLink.click()
-
         await expect(page).toHaveURL(/Blog\/.+/)
     })
 })

@@ -3,13 +3,13 @@ import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from '@studio-freight/lenis';
-import "./styles.css"
 import { Header } from "@repo/ui";
 import { Footer } from "@repo/ui";
 import { Award } from "@repo/ui";
 import { Jurnal } from '@repo/ui';
 import { Projects } from "@repo/ui";
 import { Section } from "@repo/ui";
+import "./styles.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
