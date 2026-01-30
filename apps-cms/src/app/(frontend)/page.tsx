@@ -362,7 +362,6 @@ const HomePage = () => {
     }
   }, [windowWidth]);
 
-
   return (
     <div className="dhk-website">
       <div className="home-intro-wrapper w-full relative">

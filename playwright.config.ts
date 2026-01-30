@@ -23,5 +23,12 @@ export default defineConfig({
         baseURL: 'http://localhost:3000',
       },
     },
+    {
+      name: 'cms-api',
+      testDir: './tests/e2e/apps-cms/api',
+      use: {
+        baseURL: 'http://localhost:3000',
+      },
+    },
   ],
 });
