@@ -100,7 +100,7 @@ export const BlogGrid = ({ blogs }: { blogs: any[] }) => {
                             />
                         </div>
                     )}
-                    <div className="p-6 flex flex-col flex-grow">
+                    <div className="p-6 flex flex-col flex-grow" data-testid="blog-card">
                         <h2 className="card-title text-xl font-bold text-gray-900 mb-2">
                             {blog.title}
                         </h2>
